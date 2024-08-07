@@ -1,0 +1,41 @@
+<div class="body_page">
+    <div class="container_left">
+        <img [src]="logo1" alt="logo1" width="180" height="180">
+    </div>
+    <div class="container_rigth">
+        <div class="content_form">
+            <div class="title">
+                <h1>Login</h1>
+            </div>
+            <div class="form_content">
+                <form (ngSubmit)="login()">
+                    <div>
+                        <label>Email</label>
+                        <br>
+                        <div class="icon_email_password">
+                            <input type="email" [(ngModel)]="username" name="username">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+
+                    </div>
+                    <br>
+                    <div>
+                        <label>Mot de passe</label>
+                        <br>
+                        <div class="icon_email_password">
+                            <input  type="password" name="password" [(ngModel)]="password">
+                            <i class="fa-solid fa-eye"></i>
+                        </div>
+
+                    </div>
+                    <br>
+                    <h5>Mot de passe oublié ?</h5>
+                    <br>
+                    <a href="" routerLink="/accueil">
+                        <button type="submit">Se Connecter</button>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
