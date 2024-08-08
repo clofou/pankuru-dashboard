@@ -1,0 +1,97 @@
+<nav class="app-nav-bar">
+
+    <div>
+        <a routerLink="/formulaireAdmin">
+            <img [src]="logo1" alt="logo1" width="100" height="100">
+        </a>
+    </div>
+
+    <div class="content_nav_link">
+
+        <!---------- MENU ITEMS ------------>
+
+
+        <div [class.selected]="selectedNavItem === 'acceuil'">
+            <app-menu-item *ngIf="role === 'ROLE_ADMINCOMPAGNIE'" 
+                menuItemTitle="Acceuil" 
+                menuItemIcon="fa-solid fa-house"
+                (click)="gotoPage('acceuil')">
+            </app-menu-item>
+        </div>
+
+        <div [class.selected]="selectedNavItem === 'vol'">
+            <app-menu-item *ngIf="role === 'ROLE_ADMINCOMPAGNIE'" 
+                menuItemTitle="Vols" 
+                menuItemIcon="fa-solid fa-plane"
+                (click)="gotoPage('vol')">
+            </app-menu-item>
+        </div>
+
+        <div [class.selected]="selectedNavItem === 'personnel'">
+            <app-menu-item *ngIf="role === 'ROLE_ADMINCOMPAGNIE'" 
+                menuItemTitle="Personnels" 
+                menuItemIcon="fa-solid fa-user"
+                (click)="gotoPage('personnel')">
+            </app-menu-item>
+        </div>
+
+        <div [class.selected]="selectedNavItem === 'aeroport'">
+            <app-menu-item *ngIf="role === 'ROLE_ADMINCOMPAGNIE'" 
+                menuItemTitle="Aeroports"
+                menuItemIcon="fa-solid fa-plane-departure" 
+                (click)="gotoPage('aeroport')">
+            </app-menu-item>
+        </div>
+
+        <div [class.selected]="selectedNavItem === 'compagnie'">
+            <app-menu-item *ngIf="role === 'ROLE_ADMIN'" 
+                menuItemTitle="Compagnies" 
+                menuItemIcon="fa-solid fa-house-flag"
+                (click)="gotoPage('compagnie')">
+            </app-menu-item>
+        </div>
+
+        <div [class.selected]="selectedNavItem === 'faq'">
+            <app-menu-item *ngIf="role === 'ROLE_ADMINCOMPAGNIE'" 
+                menuItemTitle="Faq" 
+                menuItemIcon="fa-solid fa-user-tie"
+                (click)="gotoPage('faq')">
+            </app-menu-item>
+        </div>
+        
+        <div [class.selected]="selectedNavItem === 'admin'">
+            <app-menu-item *ngIf="role === 'ROLE_ADMIN'" 
+                menuItemTitle="Admin" 
+                menuItemIcon="fa-solid fa-user-tie"
+                (click)="gotoPage('admin')">
+            </app-menu-item>
+        </div>
+
+        <div [class.selected]="selectedNavItem === 'superadmin'">
+            <app-menu-item *ngIf="role === 'ROLE_ADMIN'" 
+                menuItemTitle="SuperAd.."
+                menuItemIcon="fa-duotone fa-solid fa-user-tie" 
+                (click)="gotoPage('superadmin')">
+            </app-menu-item>
+        </div>
+       
+        <div class="spacer"></div>
+        
+        <!---------- NAV BAR BOTTOM ------------>
+        <div class="nav_bar-bottom">
+
+            <div [class.selected]="selectedNavItem === 'parametre'">
+                <app-menu-item menuItemTitle="Parametre" 
+                    menuItemIcon="fa-solid fa-gear" 
+                    (click)="gotoPage('parametre')">
+                </app-menu-item>
+            </div>
+            
+            <div (click)="logout()" id="nav_link_last_a" class="nav_link" routerLink="/connexion">
+                <app-menu-item menuItemTitle="Logout" menuItemIcon="fa-solid fa-right-to-bracket"></app-menu-item>
+            </div>
+
+        </div>
+
+    </div>
+</nav>

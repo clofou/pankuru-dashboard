@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Component, Inject, PLATFORM_ID } from '@angular/core';
 import { Chart, ChartConfiguration, ChartItem, ChartTypeRegistry, registerables } from 'chart.js';
-import { NavBarComponent } from '../nav-bar/nav-bar.component';
+import { NavBarComponent } from '../Utils/nav-bar/nav-bar.component';
 
 declare global {
   interface Window { responsiveVoice: any; }

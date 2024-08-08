@@ -22,8 +22,6 @@ export class ConnexionComponent {
   person: string = "assets/images/person.png";
   eyes: string = "assets/images/eye.png";
 
-  message = '';
-
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -37,20 +35,17 @@ export class ConnexionComponent {
 
   login() {
     this.authService.login(this.username, this.password).subscribe({
-      next: (response) => {
-        localStorage.setItem("currentUser", JSON.stringify(response));
-        localStorage.setItem("role", response.role[0]); // Stocker le premier rôle
-        this.router.navigate(['/accueil']);
+      next: () => {
+        this.router.navigate(['/pankuru']);
         this.toastr.success("Connexion réussie avec succès", "Success");
         this.username = '';
         this.password = '';
       },
-      error: (error) => {
-        this.message = "Nom d'utilisateur ou mot de passe incorrect";
-        this.toastr.error(this.message);
+      error: () => {
+        this.toastr.error("Nom d'utilisateur ou mot de passe incorrect");
         this.username = '';
         this.password = '';
-        console.log(error);
+
       },
       complete: () => {
         console.log("Complete");

@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
+import { UtilFunction } from '../../../components/Utils/utils-functions';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,9 @@ export class AuthService {
   private currentPassword: string | null = null; // Ajout d'une variable pour stocker le mot de passe
 
   constructor(private http: HttpClient, private router: Router) {
-    const storedUser = this.isBrowser() ? localStorage.getItem('currentUser') : null;
+    const storedUser = UtilFunction.isBrowser() ? localStorage.getItem('currentUser') : null;
     this.currentUserSubject = new BehaviorSubject<any>(storedUser ? JSON.parse(storedUser) : null);
     this.currentUser = this.currentUserSubject.asObservable();
-  }
-
-  private isBrowser(): boolean {
-    return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
   }
 
   public get currentUserValue() {
@@ -31,10 +28,9 @@ export class AuthService {
     return this.http.post<any>(`${this.BASE_URL}/personne/connexion`, { username, password })
       .pipe(
         map(user => {
-          if (user && user.token && this.isBrowser()) {
+          if (user && user.token && UtilFunction.isBrowser()) {
             localStorage.setItem('currentUser', JSON.stringify(user));
             this.currentUserSubject.next(user);
-            this.currentPassword = password; // Stocker le mot de passe
           }
           return user;
         }),
@@ -55,7 +51,7 @@ export class AuthService {
   }
 
   logout() {
-    if (this.isBrowser()) {
+    if (UtilFunction.isBrowser()) {
       localStorage.removeItem('currentUser');
     }
     this.currentUserSubject.next(null);
@@ -67,20 +63,37 @@ export class AuthService {
     return this.currentUserValue && this.currentUserValue.role && this.currentUserValue.role === role;
   }
 
-  getUsername(): string | null {
-    let user = this.currentUserSubject.value;
-    console.log("===========================================" + user.email);
-    return user ? user.email : null;
+  getUserEmail(): string | null {
+    return this.currentUserValue ? this.currentUserValue.email : null;
   }
 
-  getPassword(): string | null {
-    console.log("===========================================" + this.currentPassword);
-    return this.currentPassword; // Retourner le mot de passe stocké
+  getUsername(): string{
+    const username: string = this.currentUserValue.Nom + " " + this.currentUserValue.Premom;
+    return username;
   }
 
-  getRole(): string {
+  getUserRole(): string {
     let user = this.currentUserValue;
     return user && user.role && Array.isArray(user.role) ? user.role[0] : '';
+  }
+
+  getUserFormLocalStorage(): any{
+    let user!: Object;
+    if (UtilFunction.isBrowser()) {
+      console.log("Browser detected");
+      const userStr = localStorage.getItem('currentUser');
+      if (userStr) {
+        try {
+          user = JSON.parse(userStr);
+          console.log("Parsed user:", user);
+        } catch (e) {
+          console.error("Failed to parse user JSON:", e);
+        }
+      } else {
+        console.log("No currentUser found in localStorage");
+      }
+    }
+    return user;
   }
   
 }

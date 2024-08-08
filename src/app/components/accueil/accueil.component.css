@@ -1,0 +1,55 @@
+.container {
+    border-radius: 10px;
+    display: flex;
+    height: 80vh;
+    flex-direction: column;
+}
+
+.body_page::-webkit-scrollbar {
+    display: none;
+}
+
+.container h1 {
+    text-align: center;
+}
+
+.statistique h3 a {
+    margin-left: 15px;
+}
+
+.conteneur-one,
+.conteneur-two {
+    background-color: white;
+    box-shadow: -2px 2px 10px rgb(131, 130, 130);
+    border-radius: 10px;
+}
+
+.canva{
+    display: flex;
+    justify-content: center;
+}
+
+
+.statistique-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.content-all {
+    display: flex;
+    justify-content: space-around;
+}
+
+@media (max-width: 900px) {
+    .statistique-content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .conteneur-two {
+        margin-top: 20px;
+    }
+}

@@ -1,6 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 
+.container{
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
 .title {
     display: flex;
     justify-content: center;
@@ -16,14 +22,15 @@
 }
 
 .container_left {
-    background-color: var(--light-color);
+    background-color: #CBF7FA;
     width: 40%;
-    height: 100vh;
 }
 
-.container_rigth {
-    background-color: var(--secondary-color);
-    width: 80%;
+.container_right {
+    background-color: var(--light-gray);
+    flex: 1;
+
+    box-shadow: var(--my-box-shadow);
 }
 
 .icon_email_password i {
@@ -31,7 +38,7 @@
 }
 
 .content_form {
-    background-color: white;
+    background-color: var(--white);
     width: 350px;
     height: 380px;
     border-radius: 20px;
@@ -54,13 +61,13 @@ input {
     outline: none;
     padding-left: 10px;
     border: none;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid var(--black-night);
 }
 
 button {
     border: none;
-    background-color: var(--primary-color);
-    color: white;
+    background-color: var(--blue-pers);
+    color: var(--white);
     padding: 10px 30px;
     border-radius: 10px;
     text-align: center;
@@ -73,8 +80,13 @@ button:hover {
     background-color: var(--button-hover-color);
 }
 
-h5 {
-    color: red;
+.forgetPassword {
+    color: var(--red);
+    cursor: pointer;
+}
+.forgetPassword:hover{
+    scale: 2;
+    text-decoration: underline;
 }
 
 @media (max-width: 500px) {
