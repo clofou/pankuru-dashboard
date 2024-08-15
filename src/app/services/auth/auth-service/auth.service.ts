@@ -12,7 +12,6 @@ export class AuthService {
   private BASE_URL = 'http://localhost:8080';
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
-  private currentPassword: string | null = null; // Ajout d'une variable pour stocker le mot de passe
 
   constructor(private http: HttpClient, private router: Router) {
     const storedUser = UtilFunction.isBrowser() ? localStorage.getItem('currentUser') : null;
@@ -25,12 +24,11 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.BASE_URL}/personne/connexion`, { username, password })
+    return this.http.post<any>(`${this.BASE_URL}/personne/signin`, { username, password })
       .pipe(
         map(user => {
-          if (user && user.token && UtilFunction.isBrowser()) {
+          if (user && user.jwtToken && UtilFunction.isBrowser()) {
             localStorage.setItem('currentUser', JSON.stringify(user));
-            this.currentUserSubject.next(user);
           }
           return user;
         }),
@@ -47,45 +45,23 @@ export class AuthService {
       // Server-side errors
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    return throwError(() => new Error(errorMessage));;
+    return throwError(() => new Error(errorMessage));
   }
 
   logout() {
     if (UtilFunction.isBrowser()) {
       localStorage.removeItem('currentUser');
     }
-    this.currentUserSubject.next(null);
-    this.currentPassword = null; // Réinitialiser le mot de passe
     this.router.navigate(['/connexion']);
-  }
-
-  hasRole(role: string): boolean {
-    return this.currentUserValue && this.currentUserValue.role && this.currentUserValue.role === role;
-  }
-
-  getUserEmail(): string | null {
-    return this.currentUserValue ? this.currentUserValue.email : null;
-  }
-
-  getUsername(): string{
-    const username: string = this.currentUserValue.Nom + " " + this.currentUserValue.Premom;
-    return username;
-  }
-
-  getUserRole(): string {
-    let user = this.currentUserValue;
-    return user && user.role && Array.isArray(user.role) ? user.role[0] : '';
   }
 
   getUserFormLocalStorage(): any{
     let user!: Object;
     if (UtilFunction.isBrowser()) {
-      console.log("Browser detected");
       const userStr = localStorage.getItem('currentUser');
       if (userStr) {
         try {
           user = JSON.parse(userStr);
-          console.log("Parsed user:", user);
         } catch (e) {
           console.error("Failed to parse user JSON:", e);
         }
@@ -95,5 +71,5 @@ export class AuthService {
     }
     return user;
   }
-  
+
 }

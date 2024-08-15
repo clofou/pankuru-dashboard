@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="leftSection" (click)="onClickPays(pays.id!)">
+        <div class="icon">
+            <img [src]="pays.paysImageUrl" [alt]="'Drapeau de pays ' + pays.nom">
+        </div>
+        <div class="title">{{ pays.nom }}</div>
+    </div>
+    <div class="actionButton">
+        <div class="button1" (click)="onDeleteButtonClicked()"><i class="fa-solid fa-trash"></i></div>
+        <div class="button2" (click)="onEditButtonClicked()"><i class="fa-solid fa-pen"></i></div>
+    </div>
+</div>

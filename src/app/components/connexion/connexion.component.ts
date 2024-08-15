@@ -36,7 +36,15 @@ export class ConnexionComponent {
   login() {
     this.authService.login(this.username, this.password).subscribe({
       next: () => {
-        this.router.navigate(['/pankuru']);
+        let role;
+        console.log(this.authService.getUserFormLocalStorage());
+        role = this.authService.getUserFormLocalStorage().roles[0];
+        if (role == 'ROLE_ADMIN') {
+          this.router.navigateByUrl("/pankuru/compagnie")
+        } else{
+          this.router.navigate(['/pankuru']);
+        }
+
         this.toastr.success("Connexion réussie avec succès", "Success");
         this.username = '';
         this.password = '';
@@ -53,5 +61,5 @@ export class ConnexionComponent {
     });
   }
 
-  
+
 }

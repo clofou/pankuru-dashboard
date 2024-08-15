@@ -9,3 +9,4 @@ export { CompagnieComponent } from './compagnie/compagnie.component';
 export { AdminComponent } from './admin/admin.component';
 export { AeroportComponent } from './aeroport/aeroport.component';
 export { TemplateComponent } from '../template/template.component';
+export { VillesComponent } from '../components/localite/villes/villes.component'

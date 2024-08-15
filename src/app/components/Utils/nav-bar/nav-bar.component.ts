@@ -1,10 +1,8 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { CommonModule, isPlatformBrowser, NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { AuthService } from '../../../services/auth/auth-service/auth.service';
 import { MenuItemComponent } from './menu-item/menu-item.component';
-import { UtilFunction } from '../utils-functions';
 
 @Component({
   selector: 'app-nav-bar',
@@ -18,14 +16,13 @@ export class NavBarComponent implements OnInit {
   logo1: string = "assets/images/logoToolbar.png";
   role!: string;
 
-  constructor(private authService: AuthService, private route: Router) { 
+  constructor(private authService: AuthService, private route: Router) {
   }
-  
-  
+
+
   ngOnInit(): void {
-    this.role = this.authService.getUserFormLocalStorage().role[0];
+    this.role = this.authService.getUserFormLocalStorage().roles[0];
     if (this.role == 'ROLE_ADMIN') {
-      this.route.navigateByUrl("/pankuru/compagnie")
       this.selectedNavItem = 'compagnie';
     }
   }

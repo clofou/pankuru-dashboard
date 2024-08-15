@@ -1,0 +1,6 @@
+div {
+    font-family: 'Courier New', Courier, monospace; /* Police de type machine à écrire */
+    font-size: 16px;
+    color: var(--blue-pers);
+    font-weight: bold;
+}

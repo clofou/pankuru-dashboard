@@ -4,11 +4,11 @@
     </div>
    <div class="images_text">
         <div class="image_profil">
-            <img [ngSrc]="adminProfil" alt="logo" width="40" height="40">
+            <img src="assets/images/Profil.png" alt="logo" width="40" height="40">
         </div>
         <div class="name_admin_text">
-            <h4>{{ user.Nom + " " + user.Prenom}}</h4>
-            <h6>{{ user.role[0] }}</h6>
+            <h4>{{ user.username }}</h4>
+            <h6>{{ user.roles[0] }}</h6>
         </div>
    </div>
 </div>

@@ -13,6 +13,7 @@ body, html {
 
 body {
     font-family: 'Poppins', sans-serif;
+    color: var(--black-night);
     display: flex;
 }
 
@@ -23,7 +24,7 @@ body {
     outline: none;
     padding-left: 10px;
     border: none;
-    border-bottom: 2px solid var(--black-night);
+    border-bottom: 2px solid var(--blue-pers);
     background-color:var(--light-gray);
 }
 
@@ -34,7 +35,7 @@ body::-webkit-scrollbar{
 :root {
   --white: #FFFFFF;
   --light-gray: #f4f6f8;
-  --black-night: #000000;
+  --black-night: #201f1f;
   --red: #df0319;
   --blue-pers:#04BBC7;
   --button-hover-color: #06767e;

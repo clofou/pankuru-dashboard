@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth-service/auth.service';
-import { UtilFunction } from '../utils-functions';
 import { NgOptimizedImage } from '@angular/common';
 
 @Component({
@@ -13,23 +12,13 @@ import { NgOptimizedImage } from '@angular/common';
 export class SearchBarComponent implements OnInit {
   user!: any;
   adminProfil: string = "assets/images/Profil.png";
-  
 
-  constructor(private authService: AuthService) {
-    
-    
-    
-  }
+
+  constructor(private authService: AuthService) {}
+
   ngOnInit(): void {
     this.user = this.authService.getUserFormLocalStorage()
   }
 
-  getRole() {
-    return "this.user.role";
-  }
-  getUsername() {
-    console.log(this.user.Nom);
-    return this.user.Nom;
-  }
 
 }

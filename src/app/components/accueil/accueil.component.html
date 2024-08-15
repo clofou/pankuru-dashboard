@@ -1,20 +1,26 @@
 <div class="container">
     <div class="super-admin-admin-main fade-in">
-        <h1>Statistiques de l'entreprise</h1>
+        <h1>
+            <app-typewriter-text [fullText]="title"></app-typewriter-text>
+        </h1>
     </div>
     <br>
     <div class="statistique">
         <div class="statistique-content">
-            <div class="conteneur-one">
-                <h4>Revenus</h4>
-                <h5>Revenus Totaux</h5>
+            <div class="conteneur">
+                <div>
+                  <h4>Revenus</h4>
+                  <h5>Revenus Totaux</h5>
+                </div>
                 <div class="canva">
                     <canvas id="revenusChart"></canvas>
                 </div>
             </div>
-            <div class="conteneur-two">
-                <h4>Vols réservés</h4>
-                <h5>Pourcentage des vols réservés en fonction des mois</h5>
+            <div class="conteneur">
+                <div>
+                  <h4>Vols réservés</h4>
+                  <h5>Pourcentage des vols réservés en fonction des mois</h5>
+                </div>
                 <div class="canva">
                     <canvas id="volsChart"></canvas>
                 </div>
@@ -22,16 +28,20 @@
         </div>
 
         <div class="statistique-content">
-            <div class="conteneur-one">
+            <div class="conteneur">
+              <div>
                 <h4>Compagnie</h4>
                 <h5>L'augmentation du nombre de compagnies</h5>
+              </div>
                 <div class="canva">
                     <canvas id="compagnieChart"></canvas>
                 </div>
             </div>
-            <div class="conteneur-two">
+            <div class="conteneur">
+              <div>
                 <h4>Personnels</h4>
                 <h5>L'augmentation du nombre de personnels</h5>
+              </div>
                 <div class="canva">
                     <canvas id="personnelsChart"></canvas>
                 </div>

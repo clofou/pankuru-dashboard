@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="ajout_btn" (click)="isAddButttonClicked()">
+        <img src="assets/images/Ajouter.png" alt="ajouter" width="20" height="20">
+        <h6>Ajouter Pays</h6>
+    </div>
+    <div class="paysCardList">
+        @for (aPays of paysList; track aPays.id) {
+        <app-pays-card [pays]="aPays" (onEditListener)="isEditButtonClicked(aPays)"
+            (onDeleteListener)="isDeleteButtonClicked(aPays)" (onClickListener)="goToVilles($event)" />
+        @if (showModal) {
+        <div class="modal">
+            <div class="modal-content">
+                <span class="close" (click)="isEditButtonClicked(aPays)">&times;</span>
+                <h2>Modifier Pays</h2>
+                <br>
+                <form (ngSubmit)="modifierPays(paysSelected)" class="form_content">
+                    <div>
+                        <label>Nom:</label>
+                        <br>
+                        <input type="text" [(ngModel)]="paysSelected.nom" name="nom">
+                    </div>
+                    <div>
+                        <label>Url de drapeau:</label>
+                        <br>
+                        <input type="text" [(ngModel)]="paysSelected.paysImageUrl" name="url">
+                    </div>
+                    <br>
+                    <button type="submit">Enregistrer</button>
+                </form>
+            </div>
+        </div>
+        }
+        @if (showDeleteModal) {
+        <div class="modal">
+            <div class="modal-content">
+                <span class="close" (click)="isDeleteButtonClicked(aPays)">&times;</span>
+                <h2>Confirmer la suppression</h2>
+                <br>
+                <p>Voulez-vous vraiment supprimer ce Pays ?<br>
+                    <span style="color: var(--red);">Toutes les villes et Aeroports seront egalement supprimer.</span>
+                </p>
+                <br>
+                <br>
+                <button (click)="supprimerPays(paysSelected)" class="modal_btn_del">Supprimer</button>
+                <button (click)="isDeleteButtonClicked(aPays)" class="modal_btn_up">Annuler</button>
+            </div>
+        </div>
+        }
+        @if (showAddModal) {
+            <div class="modal">
+                <div class="modal-content">
+                    <span class="close" (click)="isAddButttonClicked()">&times;</span>
+                    <h2>Ajouter Pays</h2>
+                    <br>
+                    <form (ngSubmit)="ajouterPays()" class="form_content">
+                        <div>
+                            <label>Nom:</label>
+                            <br>
+                            <input type="text" [(ngModel)]="paysToAdd.nom" name="nom">
+                        </div>
+                        <div>
+                            <label>Url de drapeau:</label>
+                            <br>
+                            <input type="text" [(ngModel)]="paysToAdd.paysImageUrl" name="url">
+                        </div>
+                        <br>
+                        <button type="submit">Enregistrer</button>
+                    </form>
+                </div>
+            </div>
+            }
+        }
+
+        
+    </div>
+
+
+</div>
+
+<!-- Modal for deletion confirmation -->

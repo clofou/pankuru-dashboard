@@ -18,6 +18,7 @@ export const routes: Routes = [
             { path: "personnel", title: "personnel", component: Components.PersonnelComponent, canActivate: [AuthGuardService] },
             { path: "vol", title: "vol", component: Components.VolComponent, canActivate: [AuthGuardService] },
             { path: "aeroport", title: "aeroport", component: Components.AeroportComponent, canActivate: [AuthGuardService] },
+            { path: "ville/:id", title: "ville", component: Components.VillesComponent, canActivate: [AuthGuardService] },
         ]
      },
 

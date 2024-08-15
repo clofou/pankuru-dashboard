@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpInterceptorFn } from '@angular/common/http';
+import {AuthService} from "./auth-service/auth.service";
+import {inject} from "@angular/core";
 
-@Injectable()
-export class AuthInterceptor implements HttpInterceptor {
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const authService = inject(AuthService);  // Injecter le AuthService
+  const user = authService.getUserFormLocalStorage(); // Récupérer l'utilisateur depuis localStorage
+  const token = user?.jwtToken; // Extraire le token de l'utilisateur s'il est disponible
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('token'); // Récupérer le token de l'utilisateur
+  // Vérifiez si le token existe
+  if (token) {
+    const clonedReq = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+    });
 
-    if (token) {
-      const cloned = req.clone({
-        headers: req.headers.set('Authorization', `Bearer ${token}`)
-      });
-
-      return next.handle(cloned);
-    } else {
-      return next.handle(req);
-    }
+    // Passez la requête clonée au prochain gestionnaire
+    return next(clonedReq);
+  } else {
+    // Passez la requête non modifiée si pas de token
+    return next(req);
   }
-}
+};
