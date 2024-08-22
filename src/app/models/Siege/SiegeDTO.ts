@@ -1,9 +1,6 @@
-import {Avion} from "./Avion";
+import {Avion} from "../Avion";
 
-export class Siege {
-  id?: number;
-  disponibilite?: boolean;
-
+export class SiegeDTO {
   constructor(
     public numeroSiege: string,
     public classeSiege: string,

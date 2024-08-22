@@ -1,1 +1,196 @@
-<p>personnel works!</p>
+<div class="container">
+  <div class="header">
+    <button (click)="isAddButtonClicked()">Ajouter un nouveau membre</button>
+
+    <div class="cardSection">
+
+      <div class="card">
+        <h3>Salaries</h3>
+        <p>Nombre de salaries de la societe</p>
+        <span class="salarieTotaux">{{ personnelList.length }}</span>
+      </div>
+
+      <div class="card">
+        <h3>Tranche d'ages</h3>
+        <p>Personnel selon l'age</p>
+        <div class="progressiveIndicator">
+          <div class="title">Age 25-40</div>
+          <div class="percentSection">
+            <mat-progress-bar mode="determinate" [value]="percent25_40"></mat-progress-bar>
+            <p>{{nbreSalarie25_40}}</p>
+          </div>
+        </div>
+
+        <div class="progressiveIndicator">
+          <div class="title">Age 41-60</div>
+          <div class="percentSection">
+            <mat-progress-bar mode="determinate" [value]="percent41_60"></mat-progress-bar>
+            <p>{{nbreSalarie41_60}}</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <section>
+    <aside>
+      @for (poste of posteList; track poste.nom){
+        <div class="poste-card card">
+          <div class="personIcons"><i class="fa-solid fa-user"></i></div>
+          <div class="poste">
+            <p>{{ poste.nbre }}</p>
+            <h4>{{ poste.nom }}</h4>
+          </div>
+        </div>
+      }
+    </aside>
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th>Nom Complet</th><th>Poste</th><th>Affectation</th><th>actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (personnel of personnelList; track personnel.id){
+            <tr>
+              <td>
+                <div class="personIcons"><i class="fa-solid fa-user"></i></div>
+                <div>{{ personnel.prenom + " " + personnel.nom }}</div>
+              </td>
+              <td>{{ personnel.poste }}</td>
+              <td>{{ personnel.enService }}</td>
+              <td class="action">
+                <div class="button1" (click)="isDeleteButtonClicked(personnel)"><i class="fa-solid fa-trash"></i></div>
+                <div class="button2" (click)="isEditButtonClicked(personnel)"><i class="fa-solid fa-pen"></i></div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </main>
+  </section>
+
+  @if (showEditModal) {
+    <div class="modal">
+      <div class="modal-content">
+        <span class="closeBtn" (click)="isEditButtonClicked(selectedPersonnel)">&times;</span>
+        <h2>Modifier Le Personnel</h2>
+        <br>
+        <form (ngSubmit)="modifierPersonnel(selectedPersonnel)" class="form_content">
+          <div>
+            <label>Nom:</label>
+            <br>
+            <input type="text" [(ngModel)]="selectedPersonnel.nom" name="nom">
+          </div>
+          <div>
+            <label>Prenom:</label>
+            <br>
+            <input type="text" [(ngModel)]="selectedPersonnel.prenom" name="prenom">
+          </div>
+          <div>
+            <label>Date de Naissance:</label>
+            <br>
+            <input type="date" [(ngModel)]="selectedPersonnel.dateDeNaissance" name="naissance">
+          </div>
+          <div>
+            <label>Email:</label>
+            <br>
+            <input type="text" [(ngModel)]="selectedPersonnel.email" name="email">
+          </div>
+          <div>
+            <label>Numero De Telephone:</label>
+            <br>
+            <input type="text" [(ngModel)]="selectedPersonnel.numeroDeTelephone" name="numero">
+          </div>
+          <div>
+            <label>Adresse:</label>
+            <br>
+            <input type="text" [(ngModel)]="selectedPersonnel.numeroDeTelephone" name="adresse">
+          </div>
+          <div>
+            <label>Date D'embauche:</label>
+            <br>
+            <input type="text" [(ngModel)]="selectedPersonnel.dateEmbauche" name="dateEmbauche">
+          </div>
+          <div>
+            <label>Poste:</label>
+            <br>
+            <input type="text" [(ngModel)]="selectedPersonnel.poste" name="poste">
+          </div>
+          <br>
+          <button type="submit">Enregistrer</button>
+        </form>
+      </div>
+    </div>
+  }
+  @if (showDeletedModal) {
+    <div class="modal">
+      <div class="modal-content">
+        <span class="closeBtn" (click)="isDeleteButtonClicked(selectedPersonnel)">&times;</span>
+        <h2>Confirmer la suppression</h2>
+        <br>
+        <p>Voulez-vous vraiment supprimer cet Personnel?</p>
+        <br>
+        <br>
+        <button (click)="supprimerPersonnel(selectedPersonnel)" class="modal_btn_del">Supprimer</button>
+        <button (click)="isDeleteButtonClicked(selectedPersonnel)" class="modal_btn_up">Annuler</button>
+      </div>
+    </div>
+  }
+  @if (showAddModal) {
+    <div class="modal">
+      <div class="modal-content">
+        <span class="closeBtn" (click)="isAddButtonClicked()">&times;</span>
+        <h2>Ajouter Un Personnel</h2>
+        <br>
+        <form (ngSubmit)="ajouterPersonnel()" class="form_content">
+          <div>
+            <label>Nom:</label>
+            <br>
+            <input type="text" [(ngModel)]="personnelToAdd.nom" name="nom">
+          </div>
+          <div>
+            <label>Prenom:</label>
+            <br>
+            <input type="text" [(ngModel)]="personnelToAdd.prenom" name="prenom">
+          </div>
+          <div>
+            <label>Date de Naissance:</label>
+            <br>
+            <input type="date" [(ngModel)]="personnelToAdd.dateDeNaissance" name="naissance">
+          </div>
+          <div>
+            <label>Email:</label>
+            <br>
+            <input type="text" [(ngModel)]="personnelToAdd.email" name="email">
+          </div>
+          <div>
+            <label>Numero De Telephone:</label>
+            <br>
+            <input type="text" [(ngModel)]="personnelToAdd.numeroDeTelephone" name="numero">
+          </div>
+          <div>
+            <label>Adresse:</label>
+            <br>
+            <input type="text" [(ngModel)]="personnelToAdd.addresse" name="adresse">
+          </div>
+          <div>
+            <label>Date D'embauche:</label>
+            <br>
+            <input type="date" [(ngModel)]="personnelToAdd.dateEmbauche" name="dateEmbauche">
+          </div>
+          <div>
+            <label>Poste:</label>
+            <br>
+            <input type="text" [(ngModel)]="personnelToAdd.poste" name="poste">
+          </div>
+          <br>
+          <button type="submit">Enregistrer</button>
+        </form>
+      </div>
+    </div>
+  }
+
+</div>

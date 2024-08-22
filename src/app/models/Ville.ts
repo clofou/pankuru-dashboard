@@ -4,8 +4,8 @@ export class Ville{
   id?: number;
 
   constructor(
-    public nom: string,
-    public pays: Pays
+    public nom: string = "",
+    public pays: Pays = new Pays()
   ) {}
 
   resetProperties(){

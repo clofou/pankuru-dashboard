@@ -1,0 +1,5 @@
+export enum StatutAvion {
+  DISPONIBLE = 'DISPONIBLE',
+  MAINTENANCE = 'MAINTENANCE',
+  OCCUPE = 'OCCUPE',
+}

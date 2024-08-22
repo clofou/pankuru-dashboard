@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Siege} from "../../../../models/Siege";
+import {SiegeDTO} from "../../../../models/Siege/SiegeDTO";
 import {FormsModule} from "@angular/forms";
 import {GlobalCrudService} from "../../../../services/global-crud.service";
 import {ToastrService} from "ngx-toastr";
@@ -35,7 +35,7 @@ export class SiegeCardComponent {
   modifierSiege() {
     this.crudService.update("siege", this.siege.id!, this.siege).subscribe({
       next: () => {
-        this.toastr.success("Siege modifie avec Succees");
+        this.toastr.success("SiegeDTO modifie avec Succees");
         this.isSiegeClicked();
       },
       error: (err) => {

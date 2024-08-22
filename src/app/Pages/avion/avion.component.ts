@@ -23,7 +23,7 @@ export class AvionComponent implements OnInit{
   avionToAdd!: Avion;
 
   constructor(private crudService: GlobalCrudService, private route: Router, private toastr: ToastrService) {
-    this.avionToAdd = new Avion("","",0,"");
+    this.avionToAdd = new Avion();
     this.showAddModal = false;
     this.showEditModal = false;
     this.showDeletedModal = false;

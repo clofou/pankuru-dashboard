@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {GlobalCrudService} from "../../../services/global-crud.service";
-import {Siege} from "../../../models/Siege";
+import {SiegeDTO} from "../../../models/Siege/SiegeDTO";
 import {Avion} from "../../../models/Avion";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormsModule} from "@angular/forms";
@@ -71,7 +71,7 @@ export class SiegeComponent implements OnInit{
 
     this.tarifEconomique = 2000;
     this.tarifAffaire = 8000
-    this.avion = new Avion("BNN3", "", 0, "DISPONIBLE");
+    this.avion = new Avion();
     this.avion.id = 1;
   }
 
@@ -126,7 +126,7 @@ export class SiegeComponent implements OnInit{
             position = "DROITE";
           }
           for (let k= 1; k<= j; k++){
-            let siege: Siege = new Siege(lettre+this.numeroPlace.toString(), "AFFAIRE", position, this.tarifEconomique, this.avion);
+            let siege: SiegeDTO = new SiegeDTO(lettre+this.numeroPlace.toString(), "AFFAIRE", position, this.tarifEconomique, this.avion);
             console.log(siege);
             this.crudService.post("siege", siege).subscribe({
               next: (data) => {
@@ -164,7 +164,7 @@ export class SiegeComponent implements OnInit{
             position = "DROITE";
           }
           for (let k= 1; k<= j; k++){
-            let siege: Siege = new Siege(lettre+this.numeroPlace.toString(), "ECONOMIQUE", position, this.tarifEconomique, this.avion);
+            let siege: SiegeDTO = new SiegeDTO(lettre+this.numeroPlace.toString(), "ECONOMIQUE", position, this.tarifEconomique, this.avion);
             this.crudService.post("siege", siege).subscribe({
               next: (data) => {
                 console.log(data);
@@ -201,7 +201,7 @@ export class SiegeComponent implements OnInit{
             position = "DROITE";
           }
           for (let k= 1; k<= j; k++){
-            let siege: Siege = new Siege(lettre+this.numeroPlace.toString(), "ECONOMIQUE", position, this.tarifEconomique, this.avion);
+            let siege: SiegeDTO = new SiegeDTO(lettre+this.numeroPlace.toString(), "ECONOMIQUE", position, this.tarifEconomique, this.avion);
             this.crudService.post("siege", siege).subscribe({
               next: (data) => {
                 console.log(data);

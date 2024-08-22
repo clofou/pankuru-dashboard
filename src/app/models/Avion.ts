@@ -9,9 +9,9 @@ export class Avion{
   id?: number;
 
   constructor(
-    public matricule: string,
-    public nom: string,
-    public capaciteTotale: number,
-    public statut: string
+    public matricule: string = "",
+    public nom: string = "",
+    public capaciteTotale: number = 0,
+    public statut: StatutAvion = StatutAvion.DISPONIBLE,
   ) {}
 }
