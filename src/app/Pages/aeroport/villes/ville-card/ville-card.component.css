@@ -1,0 +1,60 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 20px auto auto;
+
+  .header{
+    background-color: #201f1f;
+    height: 30px;
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+
+    .title{
+      flex: 1;
+    }
+
+    .iactive{
+      transform: rotateX(180deg);
+      transition: transform 1s;
+    }
+
+  }
+
+  .globalContent{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    gap: 6px;
+
+    .content{
+      margin-top: 5px;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--light-gray);
+
+      .element{
+        width: 50px;
+      }
+
+
+    }
+
+    button{
+      padding: 4px 8px;
+      background-color: rgba(221, 221, 221, 0.58);
+      color: black;
+      border: 1px solid #e3e0e0;
+    }
+  }
+
+
+
+}
+
+
+
+

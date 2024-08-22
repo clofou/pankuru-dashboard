@@ -1,0 +1,55 @@
+.chair {
+  width: 30px;
+  height: 40px;
+  background-color: #0b7d85;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.chair::before {
+  content: '';
+  width: 80%;
+  height: 20%;
+  background-color: #04959f;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  border-radius: 10px 10px 0 0;
+}
+
+.seat {
+  width: 80%;
+  height: 50%;
+  background-color: #04BBC7;
+  position: absolute;
+  top: 30%;
+  left: 10%;
+  border-radius: 10px;
+}
+
+.headrest {
+  width: 80%;
+  height: 20%;
+  background-color: #04959f;
+  position: absolute;
+  top: 0;
+  left: 10%;
+  border-radius: 10px 10px 0 0;
+}
+
+.footrest {
+  width: 80%;
+  height: 20%;
+  background-color: #04959f;
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  border-radius: 0 0 10px 10px;
+}
+
+.info{
+  background-color: white;
+  box-shadow: var(--my-box-shadow);
+  padding: 3px;
+}

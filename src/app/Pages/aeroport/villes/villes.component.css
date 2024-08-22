@@ -1,0 +1,45 @@
+i{
+  padding: 5px;
+  border-radius: 12px;
+  background-color: white;
+  border: 1px solid black;
+  cursor: pointer;
+
+}
+i:hover{
+  transition: 0.4s;
+  transform: scale(1.2) rotate(20deg);
+}
+
+.button1 i{
+  color: var(--red);
+
+}
+.button2 i{
+  color: var(--blue-pers);
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  div{
+    padding: 4px 6px 4px 15px;
+    border-top-left-radius: 100%;
+    border-bottom-left-radius: 100%;
+    background-color: #BBBBBB;
+    border: 1px solid #dddbdb;
+    cursor: pointer;
+    color: #cae8ed;
+    box-shadow: var(--my-box-shadow);
+
+    &:hover{
+      background-color: var(--blue-pers);
+      color: white;
+      transform: skew(20deg);
+    }
+
+  }
+
+}

@@ -1,0 +1,105 @@
+<div class="container">
+  <div class="header">
+    <button (click)="IsAddAvionButtonClicked()">Ajouter Avion</button>
+  </div>
+  <div class="content">
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th><th>Matricule</th><th>Capacite</th><th>Statut</th><th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of avionList; track item.id){
+          <tr>
+            <td (click)="goToSiegePage(item)">{{ item.nom }}</td>
+            <td (click)="goToSiegePage(item)">{{ item.matricule }}</td>
+            <td (click)="goToSiegePage(item)">{{ item.capaciteTotale }}</td>
+            <td (click)="goToSiegePage(item)">{{ item.statut }}</td>
+            <td class="action">
+              <div class="button1" (click)="isDeleteButtonClicked(item)"><i class="fa-solid fa-trash"></i></div>
+              <div class="button2" (click)="isEditButtonClicked(item)"><i class="fa-solid fa-pen"></i></div>
+            </td>
+          </tr>
+
+          @if (showEditModal) {
+            <div class="modal">
+              <div class="modal-content">
+                <span class="closeBtn" (click)="isEditButtonClicked(selectedAvion)">&times;</span>
+                <h2>Modifier La ville</h2>
+                <br>
+                <form (ngSubmit)="modifierAvion(item)" class="form_content">
+                  <div>
+                    <label>Nom:</label>
+                    <br>
+                    <input type="text" [(ngModel)]="selectedAvion.nom" name="nom">
+                  </div>
+                  <div>
+                    <label>Matricule:</label>
+                    <br>
+                    <input type="text" [(ngModel)]="selectedAvion.matricule" name="matricule">
+                  </div>
+                  <div>
+                    <label>Statut:</label>
+                    <br>
+                    <input type="text" [(ngModel)]="selectedAvion.statut" name="statut">
+                  </div>
+                  <br>
+                  <button type="submit">Enregistrer</button>
+                </form>
+              </div>
+            </div>
+          }
+          @if (showDeletedModal) {
+            <div class="modal">
+              <div class="modal-content">
+                <span class="closeBtn" (click)="isDeleteButtonClicked(selectedAvion)">&times;</span>
+                <h2>Confirmer la suppression</h2>
+                <br>
+                <p>Voulez-vous vraiment supprimer cette ville?<br>
+                  <span style="color: var(--red);">Tous les Aeroports seront egalement supprimer.</span>
+                </p>
+                <br>
+                <br>
+                <button (click)="supprimerVille(selectedAvion)" class="modal_btn_del">Supprimer</button>
+                <button (click)="isDeleteButtonClicked(selectedAvion)" class="modal_btn_up">Annuler</button>
+              </div>
+            </div>
+          }
+          @if (showAddModal) {
+            <div class="modal">
+              <div class="modal-content">
+                <span class="closeBtn" (click)="IsAddAvionButtonClicked()">&times;</span>
+                <h2>Ajouter Une Ville</h2>
+                <br>
+                <form (ngSubmit)="ajouterAvion()" class="form_content">
+                  <div>
+                    <label>Nom:</label>
+                    <br>
+                    <input type="text" [(ngModel)]="avionToAdd.nom" name="nom">
+                  </div>
+                  <div>
+                    <label>Matricule:</label>
+                    <br>
+                    <input type="text" [(ngModel)]="avionToAdd.matricule" name="matricule">
+                  </div>
+                  <div>
+                    <label>Statut:</label>
+                    <br>
+                    <input type="text" [(ngModel)]="avionToAdd.statut" name="statut">
+                  </div>
+                  <br>
+                  <button type="submit">Enregistrer</button>
+                </form>
+              </div>
+            </div>
+          }
+
+        }
+      </tbody>
+
+    </table>
+  </div>
+</div>
+
+

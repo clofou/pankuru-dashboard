@@ -1,3 +1,5 @@
+import {Ville} from "./Ville";
+
 export class Aeroport{
   id?: number;
 
@@ -9,7 +11,7 @@ export class Aeroport{
     public altitude: number,
     public capaciteParking: number = 0,
     public nombreDePistes: number = 0,
-    public villeId: number,
+    public ville: Ville,
   ) {}
 }
 

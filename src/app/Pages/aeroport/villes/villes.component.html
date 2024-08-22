@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="header">
+    <div (click)="navigateBack()">Retour</div>
+    <button (click)="isAddButttonClicked()">Ajouter Une ville</button>
+  </div>
+  <div>
+    @for (ville of villeList; track ville.id){
+      <app-ville-card [ville]="ville"></app-ville-card>
+    }
+
+    @if (showEditModal) {
+      <div class="modal">
+        <div class="modal-content">
+          <span class="closeBtn" (click)="isEditButtonClicked(selectedVille)">&times;</span>
+          <h2>Modifier La ville</h2>
+          <br>
+          <form (ngSubmit)="modifierVille(selectedVille)" class="form_content">
+            <div>
+              <label>Nom:</label>
+              <br>
+              <input type="text" [(ngModel)]="selectedVille.nom" name="nom">
+            </div>
+            <br>
+            <button type="submit">Enregistrer</button>
+          </form>
+        </div>
+      </div>
+    }
+    @if (showDeletedModal) {
+      <div class="modal">
+        <div class="modal-content">
+          <span class="closeBtn" (click)="isDeleteButtonClicked(selectedVille)">&times;</span>
+          <h2>Confirmer la suppression</h2>
+          <br>
+          <p>Voulez-vous vraiment supprimer cette ville?<br>
+            <span style="color: var(--red);">Tous les Aeroports seront egalement supprimer.</span>
+          </p>
+          <br>
+          <br>
+          <button (click)="supprimerVille(selectedVille)" class="modal_btn_del">Supprimer</button>
+          <button (click)="isDeleteButtonClicked(selectedVille)" class="modal_btn_up">Annuler</button>
+        </div>
+      </div>
+    }
+    @if (showAddModal) {
+      <div class="modal">
+        <div class="modal-content">
+          <span class="closeBtn" (click)="isAddButttonClicked()">&times;</span>
+          <h2>Ajouter Une Ville</h2>
+          <br>
+          <form (ngSubmit)="ajouterVille()" class="form_content">
+            <div>
+              <label>Nom:</label>
+              <br>
+              <input type="text" [(ngModel)]="villeToAdd.nom" name="nom">
+            </div>
+            <br>
+            <button type="submit">Enregistrer</button>
+          </form>
+        </div>
+      </div>
+    }
+
+  </div>
+
+</div>

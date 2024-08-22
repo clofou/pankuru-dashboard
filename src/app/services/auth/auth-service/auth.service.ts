@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
-import { UtilFunction } from '../../../components/Utils/utils-functions';
+import { UtilFunction } from '../../../Pages/Utils/utils-functions';
 
 @Injectable({
   providedIn: 'root'

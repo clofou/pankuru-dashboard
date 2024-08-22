@@ -1,0 +1,83 @@
+<div class="container">
+  <div class="header">
+    @if (siegeList.length === 0){
+      <button (click)="genererSiege()">Generer</button>
+    } @else {
+      <button (click)="closePopup()">Reconstruire</button>
+    }
+  </div>
+  <div class="content">
+    <!-- si les sieges ont etes deja generer-->
+      <!-- Afficher les sieges -->
+    <!-- sinon montrer le formulaire de remplissage des sieges-->
+    @if(siegeList.length === 0){
+      <form (ngSubmit)="genererSiege()">
+        <div class="tete1">
+          <input type="number" [(ngModel)]="nlTete" name="nlTete">
+          <div>
+            <input type="number" [(ngModel)]="t1" name="t1">
+            <input type="number" [(ngModel)]="t2" name="t2">
+            <input type="number" [(ngModel)]="t3" name="t3">
+          </div>
+        </div>
+        <div class="tete1">
+          <input type="number" [(ngModel)]="nlCorps" name="nlCorps">
+          <div>
+            <input type="number" [(ngModel)]="c1" name="c1">
+            <input type="number" [(ngModel)]="c2" name="c2">
+            <input type="number" [(ngModel)]="c3" name="c3">
+          </div>
+        </div>
+        <div class="tete1">
+          <input type="number" [(ngModel)]="nlQueue" name="nlQueue">
+          <div>
+            <input type="number" [(ngModel)]="q1" name="q1">
+            <input type="number" [(ngModel)]="q2" name="q2">
+            <input type="number" [(ngModel)]="q3" name="q3">
+          </div>
+        </div>
+      </form>
+    } @else {
+      <div class="airplane">
+        <div class="window"></div>
+        <!-- Rangée 1 -->
+        @for (siege of siegeList.tete[0]; track siege.id){
+          <div class="row">
+            <app-siege-card [siege]="siege"></app-siege-card>
+            <app-siege-card [siege]="siege"></app-siege-card>
+            <app-siege-card [siege]="siege"></app-siege-card>
+          </div>
+          <!-- Rangée 2 -->
+          <div class="row">
+            <app-siege-card [siege]="siege"></app-siege-card>
+            <app-siege-card [siege]="siege"></app-siege-card>
+            <app-siege-card [siege]="siege"></app-siege-card>
+          </div>
+          <!-- Rangée 3 -->
+          <div class="row">
+            <app-siege-card [siege]="siege"></app-siege-card>
+            <app-siege-card [siege]="siege"></app-siege-card>
+            <app-siege-card [siege]="siege"></app-siege-card>
+          </div>
+        }
+      </div>
+    }
+
+  </div>
+  @if (showDestructionPopup) {
+    <div class="modal">
+      <div class="modal-content">
+        <span class="closeBtn" (click)="closePopup()">&times;</span>
+        <h2>Confirmer la suppression</h2>
+        <br>
+        <p>Voulez-vous vraiment supprimer tout les sieges de cet avion ?<br>
+        </p>
+        <br>
+        <br>
+        <button (click)="detruireSiege()" class="modal_btn_del">Supprimer</button>
+        <button (click)="closePopup()" class="modal_btn_up">Annuler</button>
+      </div>
+    </div>
+  }
+</div>
+

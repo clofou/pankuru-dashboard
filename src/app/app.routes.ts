@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
 import { AuthGuardService } from './services/auth/auth-service/auth-guard.service';
-import * as Components from './components';
+import * as Components from './Pages';
 
 export const routes: Routes = [
     { path: "", redirectTo: "/connexion", pathMatch: "full" },
     { path: "connexion", title: "connexion", component: Components.ConnexionComponent },
-    { path: "pankuru", title: "template", 
+    { path: "pankuru", title: "template",
         component: Components.TemplateComponent,
         children:[
             { path: "", redirectTo: "/pankuru/acceuil", pathMatch: "full"},
@@ -18,9 +18,11 @@ export const routes: Routes = [
             { path: "personnel", title: "personnel", component: Components.PersonnelComponent, canActivate: [AuthGuardService] },
             { path: "vol", title: "vol", component: Components.VolComponent, canActivate: [AuthGuardService] },
             { path: "aeroport", title: "aeroport", component: Components.AeroportComponent, canActivate: [AuthGuardService] },
+            { path: "avion", title: "avion", component: Components.AvionComponent, canActivate: [AuthGuardService] },
             { path: "ville/:id", title: "ville", component: Components.VillesComponent, canActivate: [AuthGuardService] },
+            { path: "siege/:id", title: "siege", component: Components.SiegeComponent, canActivate: [AuthGuardService] },
         ]
      },
 
-    
+
 ];

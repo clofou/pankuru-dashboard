@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { NavBarComponent } from '../components/Utils/nav-bar/nav-bar.component';
-import { SearchBarComponent } from '../components/Utils/search-bar/search-bar.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 import { RouterOutlet } from '@angular/router';
 
 @Component({

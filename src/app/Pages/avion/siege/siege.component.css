@@ -1,0 +1,57 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+.header{
+  align-self: start;
+}
+
+input{
+  all: unset;
+  border: 1px solid var(--black-night);
+  width: 50px;
+}
+
+.tete1{
+  display: flex;
+  padding: 10px;
+  height: 50px;
+  align-items: center;
+
+  div{
+    border: 1px solid var(--black-night);
+    padding: 30px;
+  }
+
+}
+
+.airplane {
+  width: 300px;
+  height: 600px;
+  background-color: #ccc;
+  border-radius: 150px 150px 0 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin-bottom: 20px;
+}
+.window {
+  width: 100%;
+  height: 80px;
+  border-radius: 150px 150px 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

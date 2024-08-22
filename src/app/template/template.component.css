@@ -30,6 +30,7 @@
     flex: 1;
     overflow-y: scroll;
     width: 100%;
+    padding: 8px;
     overflow-x: scroll;
 }
 

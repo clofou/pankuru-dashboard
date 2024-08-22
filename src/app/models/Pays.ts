@@ -1,11 +1,12 @@
 export class Pays{
-    id?: number;
-    paysImageUrl?: string;
-    constructor(public nom: string, paysImage: string){
-        this.paysImageUrl = paysImage;
+    id?: number | null;
+    constructor(
+      public nom: string,
+      public paysImageUrl: string
+    ){
     }
 
-    
+
     public set setImageUrl(v : string) {
         this.paysImageUrl = v;
     }
@@ -15,5 +16,5 @@ export class Pays{
         this.nom = "";
         this.paysImageUrl = "";
     }
-    
+
 }
