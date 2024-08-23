@@ -12,3 +12,4 @@ export { TemplateComponent } from '../template/template.component';
 export { VillesComponent } from './aeroport/villes/villes.component';
 export { AvionComponent } from './avion/avion.component';
 export { SiegeComponent } from './avion/siege/siege.component';
+export { PassagerComponent } from './vol/passager/passager.component';

@@ -28,7 +28,11 @@ export class AuthService {
       .pipe(
         map(user => {
           if (user && user.jwtToken && UtilFunction.isBrowser()) {
-            localStorage.setItem('currentUser', JSON.stringify(user));
+            if(user.roles[0] != "ROLE_USER"){
+              localStorage.setItem('currentUser', JSON.stringify(user));
+            }else{
+              throw new Error("USER NOT AUTHORIZE");
+            }
           }
           return user;
         }),

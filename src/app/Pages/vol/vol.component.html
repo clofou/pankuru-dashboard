@@ -13,8 +13,8 @@
         @for (item of volList; track item.id){
           <tr>
             <td (click)="goToPassagerPage(item)">{{ item.numeroDeVol }}</td>
-            <td (click)="goToPassagerPage(item)">{{ item.aeroportDepart }}</td>
-            <td (click)="goToPassagerPage(item)">{{ item.aeroportDArrivee }}</td>
+            <td (click)="goToPassagerPage(item)">{{ item.aeroportDepart.nom }}</td>
+            <td (click)="goToPassagerPage(item)">{{ item.aeroportDArrivee.nom }}</td>
             <td (click)="goToPassagerPage(item)">{{ item.dateEtHeureDepart }}</td>
             <td class="action">
               <div class="button1" (click)="isDeleteButtonClicked(item)"><i class="fa-solid fa-trash"></i></div>
@@ -47,13 +47,12 @@
                   <div>
                     <label>Aeroport De Depart:</label>
                     <br>
-                    <input type="text" [(ngModel)]="selectedVol.aeroportDepart" name="aD">
+                    <input type="text" [(ngModel)]="selectedVol.aeroportDepart.nom" name="aD">
                   </div>
-                  <div class="escale"></div>
                   <div>
                     <label>Aeroport D'arrivee:</label>
                     <br>
-                    <input type="text" [(ngModel)]="selectedVol.aeroportDArrivee" name="aA">
+                    <input type="text" [(ngModel)]="selectedVol.aeroportDArrivee.nom" name="aA">
                   </div>
                   <div>
                     <label>Tarif:</label>
@@ -109,13 +108,22 @@
                   <div>
                     <label>Aeroport De Depart:</label>
                     <br>
-                    <input type="text" [(ngModel)]="volToAdd.aeroportDepart" name="aD">
+                    <input type="text" [(ngModel)]="volToAdd.aeroportDepart.nom" name="aD">
                   </div>
-                  <div class="escale"></div>
+                  @for (escale of volToAdd.aeroportList; track i){
+                    <div>
+                      <div>
+                        <label>Aeroport D'escale:</label>
+                        <br>
+                        <input type="text" [(ngModel)]="volToAdd.aeroportList[i]" [name]='escale.nom'>
+                      </div>
+                    </div>
+                  }
+                  <div (click)="ajouterEscale()"><i class="fa-solid fa-add"></i> Ajouter Escale </div>
                   <div>
                     <label>Aeroport D'arrivee:</label>
                     <br>
-                    <input type="text" [(ngModel)]="volToAdd.aeroportDArrivee" name="aA">
+                    <input type="text" [(ngModel)]="volToAdd.aeroportDArrivee.nom" name="aA">
                   </div>
                   <div>
                     <label>Tarif:</label>

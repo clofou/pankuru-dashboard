@@ -21,6 +21,7 @@ export const routes: Routes = [
             { path: "avion", title: "avion", component: Components.AvionComponent, canActivate: [AuthGuardService] },
             { path: "ville/:id", title: "ville", component: Components.VillesComponent, canActivate: [AuthGuardService] },
             { path: "siege/:id", title: "siege", component: Components.SiegeComponent, canActivate: [AuthGuardService] },
+            { path: "passager/:id", title: "passage", component: Components.PassagerComponent, canActivate: [AuthGuardService] },
         ]
      },
 

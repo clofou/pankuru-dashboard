@@ -1,5 +1,20 @@
-@for (passager of passagerList; track passager.id){
-  <diV class="container">
-
-  </diV>
-}
+<table>
+  <thead>
+    <tr>
+      <th>Prenom</th><th>Nom</th><th>PassePort</th><th>Visa</th><th>Siege</th><th>Classe</th><th>Statut</th>
+    </tr>
+  </thead>
+  <tbody>
+      @for (passager of passagerList; track passager.id){
+        <tr class="container">
+          <td>{{passager.prenom}}</td>
+          <td>{{passager.nom}}</td>
+          <td>{{passager.numeroDePassPort}}</td>
+          <td>{{passager.numeroDeVisa}}</td>
+          <td>{{passager.siege.numero}}</td>
+          <td>{{passager.siege.positionSiege.classeSiege.nom}}</td>
+          <td>{{passager.reservation.statut}}</td>
+        </tr>
+      }
+  </tbody>
+</table>

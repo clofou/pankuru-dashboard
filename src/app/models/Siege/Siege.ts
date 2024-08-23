@@ -5,6 +5,10 @@ import {Avion} from "../Avion";
 export class Siege {
   public id?: number;
 
-  constructor(public numero: string, public disponibilite: SiegeDisponibilite, public positionSiege: PositionSiege, public avion: Avion ) {
-  }
+  constructor(
+    public numero: string = "",
+    public disponibilite: SiegeDisponibilite = SiegeDisponibilite.OUI,
+    public positionSiege: PositionSiege = new PositionSiege(),
+    public avion: Avion = new Avion()
+  ) {}
 }

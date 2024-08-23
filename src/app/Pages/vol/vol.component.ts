@@ -4,6 +4,8 @@ import {GlobalCrudService} from "../../services/global-crud.service";
 import {Router} from "@angular/router";
 import {Vol} from "../../models/Vol";
 import {ToastrService} from "ngx-toastr";
+import {Aeroport} from "../../models/Aeroport";
+import {Avion} from "../../models/Avion";
 
 @Component({
   selector: 'app-vol',
@@ -21,12 +23,14 @@ export class VolComponent implements OnInit{
   showDeletedModal!: boolean;
   selectedVol!: Vol;
   volToAdd!: Vol;
+  i: number;
 
   constructor(private crudService: GlobalCrudService, private route: Router, private toastr: ToastrService) {
     this.volToAdd = new Vol();
     this.showAddModal = false;
     this.showEditModal = false;
     this.showDeletedModal = false;
+    this.i = 0;
   }
 
   ngOnInit(): void {
@@ -104,5 +108,11 @@ export class VolComponent implements OnInit{
         this.toastr.error("Erreur lors de l'ajout de l'vol")
       }
     })
+  }
+
+  ajouterEscale() {
+    this.volToAdd.aeroportList.push(new Aeroport());
+    this.volToAdd.avionList.push(new Avion());
+    this.i ++;
   }
 }
