@@ -1,1 +1,139 @@
-<p>vol works!</p>
+<div class="container">
+  <div class="header">
+    <button (click)="IsAddVolButtonClicked()">Ajouter Vol</button>
+  </div>
+  <div class="content">
+    <table>
+      <thead>
+      <tr>
+        <th>Numero</th><th>Depart</th><th>Arrivee</th><th>Date de Depart</th><th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (item of volList; track item.id){
+          <tr>
+            <td (click)="goToPassagerPage(item)">{{ item.numeroDeVol }}</td>
+            <td (click)="goToPassagerPage(item)">{{ item.aeroportDepart }}</td>
+            <td (click)="goToPassagerPage(item)">{{ item.aeroportDArrivee }}</td>
+            <td (click)="goToPassagerPage(item)">{{ item.dateEtHeureDepart }}</td>
+            <td class="action">
+              <div class="button1" (click)="isDeleteButtonClicked(item)"><i class="fa-solid fa-trash"></i></div>
+              <div class="button2" (click)="isEditButtonClicked(item)"><i class="fa-solid fa-pen"></i></div>
+            </td>
+          </tr>
+
+          @if (showEditModal) {
+            <div class="modal">
+              <div class="modal-content">
+                <span class="closeBtn" (click)="isEditButtonClicked(selectedVol)">&times;</span>
+                <h2>Modifier Le Vol</h2>
+                <br>
+                <form (ngSubmit)="modifierVol(item)" class="form_content">
+                  <div>
+                    <label>Numero De Vol:</label>
+                    <br>
+                    <input type="text" [(ngModel)]="selectedVol.numeroDeVol" name="numero">
+                  </div>
+                  <div>
+                    <label>Date de Depart:</label>
+                    <br>
+                    <input type="datetime-local" [(ngModel)]="selectedVol.dateEtHeureDepart" name="dateD">
+                  </div>
+                  <div>
+                    <label>Date d'arrive:</label>
+                    <br>
+                    <input type="datetime-local" [(ngModel)]="selectedVol.dateEtHeureDepart" name="dateA">
+                  </div>
+                  <div>
+                    <label>Aeroport De Depart:</label>
+                    <br>
+                    <input type="text" [(ngModel)]="selectedVol.aeroportDepart" name="aD">
+                  </div>
+                  <div class="escale"></div>
+                  <div>
+                    <label>Aeroport D'arrivee:</label>
+                    <br>
+                    <input type="text" [(ngModel)]="selectedVol.aeroportDArrivee" name="aA">
+                  </div>
+                  <div>
+                    <label>Tarif:</label>
+                    <br>
+                    <input type="text" [(ngModel)]="selectedVol.tarifEconomiqueDeBase" name="tarif">
+                  </div>
+                  <br>
+                  <button type="submit">Enregistrer</button>
+                </form>
+              </div>
+            </div>
+          }
+
+          @if (showDeletedModal) {
+            <div class="modal">
+              <div class="modal-content">
+                <span class="closeBtn" (click)="isDeleteButtonClicked(selectedVol)">&times;</span>
+                <h2>Confirmer la suppression</h2>
+                <br>
+                <p>Voulez-vous vraiment supprimer cette ville?<br>
+                  <span style="color: var(--red);">Tous les Aeroports seront egalement supprimer.</span>
+                </p>
+                <br>
+                <br>
+                <button (click)="supprimerVille(selectedVol)" class="modal_btn_del">Supprimer</button>
+                <button (click)="isDeleteButtonClicked(selectedVol)" class="modal_btn_up">Annuler</button>
+              </div>
+            </div>
+          }
+
+          @if (showAddModal) {
+            <div class="modal">
+              <div class="modal-content">
+                <span class="closeBtn" (click)="IsAddVolButtonClicked()">&times;</span>
+                <h2>Ajouter Un Vol</h2>
+                <br>
+                <form (ngSubmit)="ajouterVol()" class="form_content">
+                  <div>
+                    <label>Numero De Vol:</label>
+                    <br>
+                    <input type="text" [(ngModel)]="volToAdd.numeroDeVol" name="numero">
+                  </div>
+                  <div>
+                    <label>Date de Depart:</label>
+                    <br>
+                    <input type="datetime-local" [(ngModel)]="volToAdd.dateEtHeureDepart" name="dateD">
+                  </div>
+                  <div>
+                    <label>Date d'arrive:</label>
+                    <br>
+                    <input type="datetime-local" [(ngModel)]="volToAdd.dateEtHeureDepart" name="dateA">
+                  </div>
+                  <div>
+                    <label>Aeroport De Depart:</label>
+                    <br>
+                    <input type="text" [(ngModel)]="volToAdd.aeroportDepart" name="aD">
+                  </div>
+                  <div class="escale"></div>
+                  <div>
+                    <label>Aeroport D'arrivee:</label>
+                    <br>
+                    <input type="text" [(ngModel)]="volToAdd.aeroportDArrivee" name="aA">
+                  </div>
+                  <div>
+                    <label>Tarif:</label>
+                    <br>
+                    <input type="text" [(ngModel)]="volToAdd.tarifEconomiqueDeBase" name="tarif">
+                  </div>
+                  <br>
+                  <button type="submit">Enregistrer</button>
+                </form>
+              </div>
+            </div>
+          }
+
+        }
+      </tbody>
+
+    </table>
+  </div>
+</div>
+
+

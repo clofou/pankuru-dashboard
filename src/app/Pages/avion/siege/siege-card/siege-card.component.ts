@@ -1,9 +1,9 @@
 import {Component, Input} from '@angular/core';
-import {SiegeDTO} from "../../../../models/Siege/SiegeDTO";
 import {FormsModule} from "@angular/forms";
 import {GlobalCrudService} from "../../../../services/global-crud.service";
 import {ToastrService} from "ngx-toastr";
 import {NgClass} from "@angular/common";
+import {Siege} from "../../../../models/Siege/Siege";
 
 @Component({
   selector: 'app-siege-card',
@@ -16,7 +16,7 @@ import {NgClass} from "@angular/common";
   styleUrl: './siege-card.component.css'
 })
 export class SiegeCardComponent {
-  @Input() siege!: any;
+  @Input() siege!: Siege;
   siegeIsMouseEnter: boolean = false;
   showAddModal: boolean = false;
 

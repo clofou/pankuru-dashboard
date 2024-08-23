@@ -2,9 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {GlobalCrudService} from "../../../services/global-crud.service";
 import {SiegeDTO} from "../../../models/Siege/SiegeDTO";
 import {Avion} from "../../../models/Avion";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {SiegeCardComponent} from "./siege-card/siege-card.component";
+import {Siege} from "../../../models/Siege/Siege";
+import {SiegeDisponibilite} from "../../../models/Enum/SiegeDisponibilite";
 
 @Component({
   selector: 'app-siege',
@@ -81,14 +83,33 @@ export class SiegeComponent implements OnInit{
         this.siegeList = data.filter((value: { avion: { id: number; }; }) => {
           return value.avion.id === this.idAvion;
         });
-        this.siegeList = this.reorganiserSieges(this.trierSiegesParNumero(this.siegeList));
-        console.log(this.siegeList.tete)
+        if (this.siegeList.length != 0){
+          console.log(this.trierParNumero(this.siegeList));
+        }
 
       },
       error: (err) => {
+        console.log("ERREUR VECNA AFFICHE SIEGE: " + err);
       }
     })
   }
+
+  trierParNumero(data: Siege[]) {
+    // Fonction de tri personnalisée pour trier par lettre puis par chiffre
+    return data.sort((a, b) => {
+      const [lettreA, chiffreA] = [a.numero[0], parseInt(a.numero.slice(1))];
+      const [lettreB, chiffreB] = [b.numero[0], parseInt(b.numero.slice(1))];
+
+      // Comparaison par lettre (ex: A, B, C...)
+      if (lettreA !== lettreB) {
+        return lettreA.localeCompare(lettreB);
+      }
+
+      // Comparaison par chiffre (ex: 1, 2, 3...)
+      return chiffreA - chiffreB;
+    });
+  }
+
 
   genererSiege(){
     this.info = {
@@ -127,10 +148,8 @@ export class SiegeComponent implements OnInit{
           }
           for (let k= 1; k<= j; k++){
             let siege: SiegeDTO = new SiegeDTO(lettre+this.numeroPlace.toString(), "AFFAIRE", position, this.tarifEconomique, this.avion);
-            console.log(siege);
             this.crudService.post("siege", siege).subscribe({
-              next: (data) => {
-                console.log(data);
+              next: () => {
               },
               error: (err) => {
                 console.log(err);
@@ -166,8 +185,7 @@ export class SiegeComponent implements OnInit{
           for (let k= 1; k<= j; k++){
             let siege: SiegeDTO = new SiegeDTO(lettre+this.numeroPlace.toString(), "ECONOMIQUE", position, this.tarifEconomique, this.avion);
             this.crudService.post("siege", siege).subscribe({
-              next: (data) => {
-                console.log(data);
+              next: () => {
               },
               error: (err) => {
                 console.log(err);
@@ -203,8 +221,7 @@ export class SiegeComponent implements OnInit{
           for (let k= 1; k<= j; k++){
             let siege: SiegeDTO = new SiegeDTO(lettre+this.numeroPlace.toString(), "ECONOMIQUE", position, this.tarifEconomique, this.avion);
             this.crudService.post("siege", siege).subscribe({
-              next: (data) => {
-                console.log(data);
+              next: () => {
               },
               error: (err) => {
                 console.log(err);
@@ -239,7 +256,6 @@ export class SiegeComponent implements OnInit{
 
     sections.forEach(({ section, lettreDebut, lettreFin, places }) => {
       const siegesSection = sieges.filter(siege => siege.numero.charAt(0) >= lettreDebut && siege.numero.charAt(0) <= lettreFin);
-      console.log("NNNNNNN"+siegesSection);
       let compteur = 0;
       let ligneC: any = [];
 
@@ -292,5 +308,32 @@ export class SiegeComponent implements OnInit{
 
   closePopup() {
     this.showDestructionPopup = !this.showDestructionPopup;
+  }
+
+  transformerSieges(sections: any): any {
+    function groupSeatsByRow(seats:any[], columnsPerRow:any) {
+      const result = [];
+      for (let i = 0; i < seats.length; i += columnsPerRow) {
+        const row = seats.slice(i, i + columnsPerRow);
+        const formattedRow = row.map((seat, index) => seat ? [seat] : []);
+        result.push(formattedRow);
+      }
+      return result;
+    }
+
+    function processSection(section:any[], columnsPerRow:any) {
+      const seats = section.flatMap(row => row);
+      const placeParColonne = groupSeatsByRow(seats, columnsPerRow);
+      return {
+        nbreDeLigne: placeParColonne.length,
+        placeParColonne: placeParColonne
+      };
+    }
+
+    const tete = processSection(sections.tete, 3); // 3 colonnes par ligne pour 'tete'
+    const corps = processSection(sections.corps, 3); // 3 colonnes par ligne pour 'corps'
+    const queue = processSection(sections.queue, 3); // 3 colonnes par ligne pour 'queue'
+
+    return { tete, corps, queue };
   }
 }

@@ -1,15 +1,19 @@
-<div class="chair" (click)="isSiegeClicked()" (mouseenter)="showSiegeInfo()" (mouseleave)="showSiegeInfo()">
-  <div class="headrest"></div>
-  <div class="seat"></div>
-  <div class="footrest"></div>
-</div>
-@if (siegeIsMouseEnter){
-  <div class="info">
-    <div class="title">{{ siege.numero }}</div>
-    <div class="price">{{ siege.tarif }}</div>
-    <div class="classe">{{ siege.classeSiege }}</div>
+
+
+<div class="container">
+  <div class="chair" (click)="isSiegeClicked()" (mouseenter)="showSiegeInfo()" (mouseleave)="showSiegeInfo()">
+    <div class="headrest"></div>
+    <div class="seat"></div>
+    <div class="footrest"></div>
   </div>
-}
+  @if (siegeIsMouseEnter){
+    <div class="info">
+      <div class="title">{{ siege.numero }}</div>
+      <div class="price">{{ siege.positionSiege.tarif }}</div>
+      <div class="classe">{{ siege.positionSiege.classeSiege.nom }}</div>
+    </div>
+  }
+</div>
 @if (showAddModal) {
   <div class="modal">
     <div class="modal-content">
@@ -18,14 +22,14 @@
       <br>
       <form (ngSubmit)="modifierSiege()" class="form_content">
         <div>
-          <label>Nom:</label>
+          <label>Prix:</label>
           <br>
-          <input type="text" [(ngModel)]="siege.tarif" name="nom">
+          <input type="text" [(ngModel)]="siege.positionSiege.tarif" name="tarif">
         </div>
         <div>
-          <label>Nom:</label>
+          <label>Classe:</label>
           <br>
-          <input type="text" [(ngModel)]="siege.classeSiege" name="nom">
+          <input type="text" [(ngModel)]="siege.positionSiege.classeSiege.nom" name="nom">
         </div>
         <br>
         <button type="submit">Enregistrer</button>
