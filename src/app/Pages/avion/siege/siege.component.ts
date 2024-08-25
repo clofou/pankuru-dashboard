@@ -6,7 +6,7 @@ import {ActivatedRoute} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {SiegeCardComponent} from "./siege-card/siege-card.component";
 import {Siege} from "../../../models/Siege/Siege";
-import {SiegeDisponibilite} from "../../../models/Enum/SiegeDisponibilite";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-siege',
@@ -24,38 +24,25 @@ export class SiegeComponent implements OnInit{
     "corps" : {"nbreDeLigne": number, "placeParColonne": number[]},
     "queue" : {"nbreDeLigne": number, "placeParColonne": number[]}
   };
-
-  ngOnInit() {
-    //this.genererSiege();
-    this.idAvion = Number(this.route.snapshot.paramMap.get('id'));
-    this.recupererListeDesSieges();
-
-  }
-
   errorMessage!: string;
   numeroPlace = 1;
   tarifAffaire!: number;
   avion!: Avion;
   tarifEconomique!: number;
-  siegeList: any = [];
+  siegeList: Siege[] = [];
+  siegeFormater: any = [];
   idAvion!: number;
-  nlCorps: number = 0;
-  nlTete: number = 0;
-  nlQueue: number = 0;
-  c1: number = 0;
-  c2: number = 0;
-  c3: number = 0;
-  t1: number = 0;
-  t2: number = 0;
-  t3: number = 0;
-  q1: number = 0;
-  q2: number = 0;
-  q3: number = 0;
+  nlCorps: number; nlTete: number; nlQueue: number;
+  c1: number;c2: number; c3: number;
+  t1: number; t2: number; t3: number;
+  q1: number; q2: number; q3: number;
   showDestructionPopup: boolean = false;
+  nbrOfSiege1 = 0;
 
-  constructor(private crudService: GlobalCrudService, private route: ActivatedRoute) {
+  constructor(private crudService: GlobalCrudService, private route: ActivatedRoute, private toastr: ToastrService) {
 
     this.errorMessage = "";
+    [this.nlCorps, this.nlTete, this.nlQueue, this.c1, this.c2, this.c3, this.t1, this.t2, this.t3, this.q1, this.q2, this.q3] = [0,0,0,0,0,0,0,0,0,0,0,0];
     this.info = {
       "tete": {
         "nbreDeLigne": this.nlTete,
@@ -71,11 +58,18 @@ export class SiegeComponent implements OnInit{
       }
     }
 
-    this.tarifEconomique = 2000;
-    this.tarifAffaire = 8000
+    this.tarifEconomique = 25;
+    this.tarifAffaire = 75;
     this.avion = new Avion();
     this.avion.id = 1;
   }
+
+  ngOnInit() {
+    //this.genererSiege();
+    this.idAvion = Number(this.route.snapshot.paramMap.get('id'));
+    this.recupererListeDesSieges();
+  }
+
 
   recupererListeDesSieges(){
     this.crudService.get("siege").subscribe({
@@ -83,8 +77,9 @@ export class SiegeComponent implements OnInit{
         this.siegeList = data.filter((value: { avion: { id: number; }; }) => {
           return value.avion.id === this.idAvion;
         });
+        console.log(this.siegeList);
         if (this.siegeList.length != 0){
-          console.log(this.trierParNumero(this.siegeList));
+          this.siegeFormater = this.trierParNumero(this.siegeList);
         }
 
       },
@@ -95,23 +90,61 @@ export class SiegeComponent implements OnInit{
   }
 
   trierParNumero(data: Siege[]) {
-    // Fonction de tri personnalisée pour trier par lettre puis par chiffre
-    return data.sort((a, b) => {
-      const [lettreA, chiffreA] = [a.numero[0], parseInt(a.numero.slice(1))];
-      const [lettreB, chiffreB] = [b.numero[0], parseInt(b.numero.slice(1))];
-
-      // Comparaison par lettre (ex: A, B, C...)
-      if (lettreA !== lettreB) {
-        return lettreA.localeCompare(lettreB);
-      }
+    // Fonction de tri personnalisée pour trier par chiffre
+    let siegeTrier: Siege[] = data.sort((a, b) => {
+      const chiffreA = parseInt(a.numero.slice(1));
+      const chiffreB = parseInt(b.numero.slice(1));
 
       // Comparaison par chiffre (ex: 1, 2, 3...)
       return chiffreA - chiffreB;
     });
+
+    let siegeDoublementTrier: Siege[][][] = [
+      [[], [], []],
+      [[], [], []],
+      [[], [], []]
+    ];
+
+    for(let siege of siegeTrier) {
+      console.log(siege.numero[0]);
+
+      switch (siege.numero[0]) {
+        case 'A':
+          siegeDoublementTrier[0][0].push(siege);
+          break;
+        case 'B':
+          siegeDoublementTrier[0][1].push(siege);
+          break;
+        case 'C':
+          siegeDoublementTrier[0][2].push(siege);
+          break;
+        case 'D':
+          siegeDoublementTrier[1][0].push(siege);
+          break;
+        case 'E':
+          siegeDoublementTrier[1][1].push(siege);
+          break;
+        case 'F':
+          siegeDoublementTrier[1][2].push(siege);
+          break;
+        case 'G':
+          siegeDoublementTrier[2][0].push(siege);
+          break;
+        case 'H':
+          siegeDoublementTrier[2][1].push(siege);
+          break;
+        case 'I':
+          siegeDoublementTrier[2][2].push(siege);
+          break;
+      }
+    }
+
+    return siegeDoublementTrier;
   }
 
 
   genererSiege(){
+    this.nbrOfSiege1 = 0;
     this.info = {
       "tete": {
         "nbreDeLigne": this.nlTete,
@@ -132,31 +165,12 @@ export class SiegeComponent implements OnInit{
       for (let i=1; i<=this.info.tete.nbreDeLigne; i++){
         let compteur = 1
         for (let j of this.info.tete.placeParColonne){
-          let lettre;
-          let position = "";
-          if (compteur === 1){
-            lettre = "A";
-            position = "GAUCHE";
+          let lettre = "A";
+          switch (compteur) {
+            case 2: lettre = "B"; break;
+            case 3: lettre = "C"; break;
           }
-          if (compteur === 2){
-            lettre = "B";
-            position = "MILIEU";
-          }
-          if (compteur === 3){
-            lettre = "C";
-            position = "DROITE";
-          }
-          for (let k= 1; k<= j; k++){
-            let siege: SiegeDTO = new SiegeDTO(lettre+this.numeroPlace.toString(), "AFFAIRE", position, this.tarifEconomique, this.avion);
-            this.crudService.post("siege", siege).subscribe({
-              next: () => {
-              },
-              error: (err) => {
-                console.log(err);
-              }
-            })
-            this.numeroPlace++;
-          }
+          this.enregistrerSiege(j, lettre, compteur, "AFFAIRE")
           compteur++;
         }
       }
@@ -168,31 +182,12 @@ export class SiegeComponent implements OnInit{
       for (let i=1; i<=this.info.corps.nbreDeLigne; i++){
         let compteur = 1
         for (let j of this.info.corps.placeParColonne){
-          let lettre;
-          let position = "";
-          if (compteur === 1){
-            lettre = "D";
-            position = "GAUCHE";
+          let lettre = "D";
+          switch (compteur) {
+            case 2: lettre = "E"; break;
+            case 3: lettre = "F"; break;
           }
-          if (compteur === 2){
-            lettre = "E";
-            position = "MILIEU";
-          }
-          if (compteur === 3){
-            lettre = "F"
-            position = "DROITE";
-          }
-          for (let k= 1; k<= j; k++){
-            let siege: SiegeDTO = new SiegeDTO(lettre+this.numeroPlace.toString(), "ECONOMIQUE", position, this.tarifEconomique, this.avion);
-            this.crudService.post("siege", siege).subscribe({
-              next: () => {
-              },
-              error: (err) => {
-                console.log(err);
-              }
-            })
-            this.numeroPlace++;
-          }
+          this.enregistrerSiege(j, lettre, compteur, "ECONOMIQUE");
           compteur++;
         }
       }
@@ -204,136 +199,79 @@ export class SiegeComponent implements OnInit{
       for (let i=1; i<=this.info.queue.nbreDeLigne; i++){
         let compteur = 1
         for (let j of this.info.queue.placeParColonne){
-          let lettre;
-          let position = "";
-          if (compteur === 1){
-            lettre = "G";
-            position = "GAUCHE";
+          let lettre = "G";
+          switch (compteur) {
+            case 2: lettre = "H"; break;
+            case 3: lettre = "I"; break;
           }
-          if (compteur === 2){
-            lettre = "H";
-            position = "MILIEU";
-          }
-          if (compteur === 3){
-            lettre = "I"
-            position = "DROITE";
-          }
-          for (let k= 1; k<= j; k++){
-            let siege: SiegeDTO = new SiegeDTO(lettre+this.numeroPlace.toString(), "ECONOMIQUE", position, this.tarifEconomique, this.avion);
-            this.crudService.post("siege", siege).subscribe({
-              next: () => {
-              },
-              error: (err) => {
-                console.log(err);
-              }
-            })
-            this.numeroPlace++;
-          }
+          this.enregistrerSiege(j, lettre, compteur, "ECONOMIQUE")
           compteur++;
         }
       }
-
     }
-    this.recupererListeDesSieges();
+    if (this.errorMessage == ""){
+    }
   };
 
-  enresgistrerSiege(j: number, lettre: string, position: string, classe: string){
+  enregistrerSiege(j: number, lettre: string, compteur: number, classe: string){
+    let position = "GAUCHE"
+    switch (compteur) {
+      case 2: position = "MILEU"; break;
+      case 3: position = "DROITE"; break;
+    }
+    for (let k= 1; k<= j; k++){
+      let siege: SiegeDTO = new SiegeDTO(lettre+this.numeroPlace.toString(), classe, position, this.tarifEconomique, this.avion);
+      this.crudService.post("siege", siege).subscribe({
+        next: () => {
+        },
+        error: (err) => {
+          console.log(err);
+          this.errorMessage = "err"
+        },
+        complete: () => {
+          this.nbrOfSiege1++;
+          let total: number =
+            this.info.tete.nbreDeLigne*(this.info.tete.placeParColonne[0]+this.info.tete.placeParColonne[1]+this.info.tete.placeParColonne[2]) +
+            this.info.corps.nbreDeLigne*(this.info.corps.placeParColonne[0]+this.info.corps.placeParColonne[1]+this.info.corps.placeParColonne[2])+
+            this.info.queue.nbreDeLigne*(this.info.queue.placeParColonne[0]+this.info.queue.placeParColonne[1]+this.info.queue.placeParColonne[2]);
 
-  }
-
-  reorganiserSieges(sieges: any[]) {
-    const result: any = {
-      tete: [],
-      corps: [],
-      queue: []
-    };
-
-    const sections = [
-      { section: "tete", lettreDebut: "A", lettreFin: "C", places: this.info.tete.placeParColonne },
-      { section: "corps", lettreDebut: "D", lettreFin: "F", places: this.info.corps.placeParColonne },
-      { section: "queue", lettreDebut: "G", lettreFin: "I", places: this.info.queue.placeParColonne }
-    ];
-
-    sections.forEach(({ section, lettreDebut, lettreFin, places }) => {
-      const siegesSection = sieges.filter(siege => siege.numero.charAt(0) >= lettreDebut && siege.numero.charAt(0) <= lettreFin);
-      let compteur = 0;
-      let ligneC: any = [];
-
-      siegesSection.forEach((siege, index) => {
-        ligneC.push(siege);
-
-        // Si la ligne est complète, on l'ajoute au résultat et on réinitialise
-        if (ligneC.length === places[compteur]) {
-          result[section].push(ligneC);
-          ligneC = [];
-          compteur = (compteur + 1) % places.length; // Passer à la colonne suivante
+          console.log(total);
+          console.log(this.nbrOfSiege1);
+          if (this.nbrOfSiege1 === total){
+            this.recupererListeDesSieges();
+            this.toastr.success("Toutes les Sieges ont etes GENEREES");
+          }
         }
-      });
-
-      // Ajouter la dernière ligne si elle n'est pas vide
-      if (ligneC.length > 0) {
-        result[section].push(ligneC);
-      }
-    });
-
-    return result;
-  }
-
-  trierSiegesParNumero(sieges: any[]) {
-    return sieges.sort((a, b) => {
-      // Extraire les chiffres des numéros de siège
-      const chiffreA = parseInt(a.numero.match(/\d+/)[0], 10);
-      const chiffreB = parseInt(b.numero.match(/\d+/)[0], 10);
-
-      // Comparer les chiffres
-      return chiffreA - chiffreB;
-    });
+      })
+      this.numeroPlace++;
+    }
   }
 
   detruireSiege() {
-    for (let siege of this.siegeList){
+    let nbrOfSiege = 0;
+    console.log(this.siegeList.length);
+    for(let siege of this.siegeList){
       this.crudService.delete("siege", siege.id!).subscribe({
-        next: () => {
-
-        },
+        next: () => {},
         error: (err) => {
-          console.log("Erreur lors de la suppression des sieges" + err);
-
+          this.toastr.error("Erreur lors de la suppression des sieges");
+          console.log(err);
+        },
+        complete: () => {
+          nbrOfSiege++;
+          console.log(nbrOfSiege);
+          if (nbrOfSiege === this.siegeList.length){
+            this.recupererListeDesSieges();
+            this.closePopup();
+            this.toastr.error("Toutes les Sieges ont etes Supprimes");
+          }
         }
       })
     }
-    this.closePopup();
-    this.recupererListeDesSieges();
+
   }
 
   closePopup() {
     this.showDestructionPopup = !this.showDestructionPopup;
-  }
-
-  transformerSieges(sections: any): any {
-    function groupSeatsByRow(seats:any[], columnsPerRow:any) {
-      const result = [];
-      for (let i = 0; i < seats.length; i += columnsPerRow) {
-        const row = seats.slice(i, i + columnsPerRow);
-        const formattedRow = row.map((seat, index) => seat ? [seat] : []);
-        result.push(formattedRow);
-      }
-      return result;
-    }
-
-    function processSection(section:any[], columnsPerRow:any) {
-      const seats = section.flatMap(row => row);
-      const placeParColonne = groupSeatsByRow(seats, columnsPerRow);
-      return {
-        nbreDeLigne: placeParColonne.length,
-        placeParColonne: placeParColonne
-      };
-    }
-
-    const tete = processSection(sections.tete, 3); // 3 colonnes par ligne pour 'tete'
-    const corps = processSection(sections.corps, 3); // 3 colonnes par ligne pour 'corps'
-    const queue = processSection(sections.queue, 3); // 3 colonnes par ligne pour 'queue'
-
-    return { tete, corps, queue };
   }
 }

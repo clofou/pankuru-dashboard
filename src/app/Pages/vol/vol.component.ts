@@ -24,17 +24,45 @@ export class VolComponent implements OnInit{
   selectedVol!: Vol;
   volToAdd!: Vol;
   i: number;
+  aeroportList: Aeroport[];
+  avionList: Avion[];
 
   constructor(private crudService: GlobalCrudService, private route: Router, private toastr: ToastrService) {
     this.volToAdd = new Vol();
     this.showAddModal = false;
     this.showEditModal = false;
     this.showDeletedModal = false;
-    this.i = 0;
+    this.i = -1;
+    this.aeroportList = [];
+    this.avionList = [];
   }
 
   ngOnInit(): void {
     this.getAllVol();
+    this.getListAeroport();
+    this.getListAvion();
+  }
+
+  getListAeroport(){
+    this.crudService.get("aeroport").subscribe({
+      next: (data) => {
+        this.aeroportList = data;
+      },
+      error: (err) => {
+        console.log("ERREUR VECNA AFFICHER AEROPORT: "+ err);
+      }
+    })
+  }
+
+  getListAvion(){
+    this.crudService.get("avion").subscribe({
+      next: (data) => {
+        this.avionList = data;
+      },
+      error: (err) => {
+        console.log("ERREUR VECNA AFFICHER AVION: "+ err);
+      }
+    })
   }
 
   getAllVol(){
@@ -64,10 +92,16 @@ export class VolComponent implements OnInit{
   }
 
   modifierVol(selectedVol: Vol) {
+    this.selectedVol.aeroportDepart = this.aeroportList.filter((value) => {return value.id === Number(this.selectedVol.aeroportDepart)})[0];
+    this.selectedVol.aeroportDArrivee = this.aeroportList.filter((value) => {return value.id === Number(this.selectedVol.aeroportDArrivee)})[0];
+    this.selectedVol.avionDepart = this.avionList.filter((value) => {return value.id === Number(this.selectedVol.avionDepart)})[0];
+    if (this.selectedVol.numeroDeVol =='' || this.selectedVol.avionDepart == null || this.selectedVol.aeroportDepart == null || this.selectedVol.tarifEconomiqueDeBase == 0){
+      return;
+    }
     this.crudService.update("vol", this.selectedVol.id!, selectedVol).subscribe({
       next: (data) => {
         console.log(data);
-        this.toastr.success("Vol enregistre avec Succees");
+        this.toastr.success("Vol Modifier avec Succees");
         this.isEditButtonClicked(selectedVol);
       },
       error: (err) => {
@@ -83,11 +117,13 @@ export class VolComponent implements OnInit{
     this.selectedVol = selectedVol;
   }
 
-  supprimerVille(selectedVol: Vol) {
+  supprimerVol(selectedVol: Vol) {
     this.crudService.delete("vol", selectedVol.id!).subscribe(
       {
         next: () => {
           this.toastr.error("Suppresion effectue avec success.");
+          this.getAllVol();
+          this.isDeleteButtonClicked(selectedVol);
         },
         error: (err) => {
           console.log(err);
@@ -98,12 +134,23 @@ export class VolComponent implements OnInit{
   }
 
   ajouterVol() {
+    this.volToAdd.aeroportDepart = this.aeroportList.filter((value) => {return value.id === Number(this.volToAdd.aeroportDepart)})[0];
+    this.volToAdd.aeroportDArrivee = this.aeroportList.filter((value) => {return value.id === Number(this.volToAdd.aeroportDArrivee)})[0];
+    this.volToAdd.avionDepart = this.avionList.filter((value) => {return value.id === Number(this.volToAdd.avionDepart)})[0];
+    if (this.volToAdd.numeroDeVol =='' || this.volToAdd.avionDepart == null || this.volToAdd.aeroportDepart == null || this.volToAdd.tarifEconomiqueDeBase == 0){
+      return;
+    }
+
     this.crudService.post("vol", this.volToAdd).subscribe({
       next: (data) => {
+        console.log(this.volToAdd);
         console.log(data);
         this.toastr.success("Vol "+ this.volToAdd.numeroDeVol+ " ajouter avec succeess.")
+        this.getAllVol();
+        this.IsAddVolButtonClicked();
       },
       error: (err) => {
+        console.log(this.volToAdd);
         console.log(err);
         this.toastr.error("Erreur lors de l'ajout de l'vol")
       }
@@ -111,8 +158,8 @@ export class VolComponent implements OnInit{
   }
 
   ajouterEscale() {
-    this.volToAdd.aeroportList.push(new Aeroport());
+
     this.volToAdd.avionList.push(new Avion());
-    this.i ++;
+    this.volToAdd.aeroportList.push(new Aeroport());
   }
 }

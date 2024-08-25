@@ -1,0 +1,9 @@
+.escale{
+  display: flex;
+}
+.boutonEscale{
+  margin: 10px 0;
+}
+.clickable{
+  cursor: pointer;
+}
