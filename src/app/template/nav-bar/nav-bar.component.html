@@ -67,14 +67,6 @@
             </app-menu-item>
         </div>
 
-        <div [class.selected]="selectedNavItem === 'admin'">
-            <app-menu-item *ngIf="role === 'ROLE_ADMIN'"
-                menuItemTitle="Admin"
-                menuItemIcon="fa-solid fa-user-tie"
-                (click)="gotoPage('admin')">
-            </app-menu-item>
-        </div>
-
         <div [class.selected]="selectedNavItem === 'superadmin'">
             <app-menu-item *ngIf="role === 'ROLE_ADMIN'"
                 menuItemTitle="SuperAd.."

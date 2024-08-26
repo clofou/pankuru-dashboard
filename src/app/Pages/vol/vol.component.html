@@ -22,220 +22,219 @@
             </td>
           </tr>
 
-          @if (showEditModal) {
-            <div class="modal">
-              <div class="modal-content">
-                <span class="closeBtn" (click)="isEditButtonClicked(selectedVol)">&times;</span>
-                <h2>Modifier Le Vol</h2>
-                <br>
-                <form (ngSubmit)="modifierVol(item)" class="form_content">
-                  <div>
-                    <label>Numero De Vol:</label>
-                    <br>
-                    <input type="text" [(ngModel)]="selectedVol.numeroDeVol" name="numero">
-                  </div>
-                  <div>
-                    <label>Date de Depart:</label>
-                    <br>
-                    <input type="datetime-local" [(ngModel)]="selectedVol.dateEtHeureDepart" name="dateD">
-                  </div>
-                  <div>
-                    <label>Date d'arrive:</label>
-                    <br>
-                    <input type="datetime-local" [(ngModel)]="selectedVol.dateEtHeureArrivee" name="dateA">
-                  </div>
-                  <div>
-                    <div>
-                      <label>Aeroport De Depart:</label>
-                      <br>
 
-                      <select name="Aa" id="SaeroportD" [(ngModel)]="selectedVol.aeroportDepart">
-                        <option value="">--Choisissez un aeroport--</option>
-                        @for(aeroport of aeroportList; track aeroport.id){
-                          <option [value]="aeroport.id">{{ aeroport.nom }}</option>
-                        }
-                      </select>
-                    </div>
-                    <div>
-                      <label>Avion De depart:</label>
-                      <br>
-
-                      <select name="aDe" id="SAvionD" [(ngModel)]="selectedVol.avionDepart">
-                        <option value="">--Choisissez un avion--</option>
-                        @for(avion of avionList; track avion.id){
-                          <option [value]="avion.id">{{ avion.nom }}</option>
-                        }
-                      </select>
-                    </div>
-                  </div>
-                  @for (escale of selectedVol.aeroportList; track i){
-                    <div class="escale">
-                      <div>
-                        <label>Aeroport D'escale:</label>
-                        <br>
-
-                        <select [name]="i.toString()+'ar'" [id]="'aeroportE'+i.toString()" [(ngModel)]="selectedVol.aeroportList">
-                          <option value="">--Choisissez un aeroport--</option>
-                          @for(aeroport of aeroportList; track aeroport.id){
-                            <option [value]="aeroport.id">{{ aeroport.nom }}</option>
-                          }
-                        </select>
-                      </div>
-                      <div>
-                        <label>Avion D'escale:</label>
-                        <br>
-
-                        <select [name]="i.toString()+'av'" [id]="'AvionE'+i.toString()" [(ngModel)]="selectedVol.avionList">
-                          <option value="">--Choisissez un avion--</option>
-                          @for(avion of avionList; track avion.id){
-                            <option [value]="avion.id">{{ avion.nom }}</option>
-                          }
-                        </select>
-                      </div>
-                    </div>
-                  }
-                  <div class="boutonEscale"><i class="fa-solid fa-add" (click)="ajouterEscale()" ></i> Ajouter Escale </div>
-                  <div>
-                    <label>Aeroport D'arrivee:</label>
-                    <br>
-
-                    <select name="Aa" id="SaeroportA" [(ngModel)]="selectedVol.aeroportDArrivee">
-                      <option value="">--Choisissez un aeroport--</option>
-                      @for(aeroport of aeroportList; track aeroport.id){
-                        <option [value]="aeroport.id">{{ aeroport.nom }}</option>
-                      }
-                    </select>
-                  </div>
-                  <div>
-                    <label>Tarif:</label>
-                    <br>
-                    <input type="text" [(ngModel)]="selectedVol.tarifEconomiqueDeBase" name="tarif">
-                  </div>
-                  <br>
-                  <button type="submit">Enregistrer</button>
-                </form>
-              </div>
-            </div>
-          }
-
-          @if (showDeletedModal) {
-            <div class="modal">
-              <div class="modal-content">
-                <span class="closeBtn" (click)="isDeleteButtonClicked(selectedVol)">&times;</span>
-                <h2>Confirmer la suppression</h2>
-                <br>
-                <p>Voulez-vous vraiment supprimer cette ville?<br>
-                  <span style="color: var(--red);">Tous les Aeroports seront egalement supprimer.</span>
-                </p>
-                <br>
-                <br>
-                <button (click)="supprimerVol(selectedVol)" class="modal_btn_del">Supprimer</button>
-                <button (click)="isDeleteButtonClicked(selectedVol)" class="modal_btn_up">Annuler</button>
-              </div>
-            </div>
-          }
-
-          @if (showAddModal) {
-            <div class="modal">
-              <div class="modal-content">
-                <span class="closeBtn" (click)="IsAddVolButtonClicked()">&times;</span>
-                <h2>Ajouter Un Vol</h2>
-                <br>
-                <form (ngSubmit)="ajouterVol()" class="form_content">
-                  <div>
-                    <label>Numero De Vol:</label>
-                    <br>
-                    <input type="text" [(ngModel)]="volToAdd.numeroDeVol" name="numero">
-                  </div>
-                  <div>
-                    <label>Date de Depart:</label>
-                    <br>
-                    <input type="datetime-local" [(ngModel)]="volToAdd.dateEtHeureDepart" name="dateD">
-                  </div>
-                  <div>
-                    <label>Date d'arrive:</label>
-                    <br>
-                    <input type="datetime-local" [(ngModel)]="volToAdd.dateEtHeureArrivee" name="dateA">
-                  </div>
-                  <div>
-                    <div>
-                      <label>Aeroport De Depart:</label>
-                      <br>
-
-                      <select name="Aa" id="aeroportD" [(ngModel)]="volToAdd.aeroportDepart">
-                        <option value="">--Choisissez un aeroport--</option>
-                        @for(aeroport of aeroportList; track aeroport.id){
-                          <option [value]="aeroport.id">{{ aeroport.nom }}</option>
-                        }
-                      </select>
-                    </div>
-                    <div>
-                      <label>Avion De depart:</label>
-                      <br>
-
-                      <select name="aDe" id="AvionD" [(ngModel)]="volToAdd.avionDepart">
-                        <option value="">--Choisissez un avion--</option>
-                        @for(avion of avionList; track avion.id){
-                          <option [value]="avion.id">{{ avion.nom }}</option>
-                        }
-                      </select>
-                    </div>
-                  </div>
-                  @for (escale of volToAdd.aeroportList; track i){
-                    <div class="escale">
-                      <div>
-                        <label>Aeroport D'escale:</label>
-                        <br>
-
-                        <select [name]="i.toString()+'ar'" [id]="'aeroportE'+i.toString()" [(ngModel)]="volToAdd.aeroportList">
-                          <option value="">--Choisissez un aeroport--</option>
-                          @for(aeroport of aeroportList; track aeroport.id){
-                            <option [value]="aeroport.id">{{ aeroport.nom }}</option>
-                          }
-                        </select>
-                      </div>
-                      <div>
-                        <label>Avion D'escale:</label>
-                        <br>
-
-                        <select [name]="i.toString()+'av'" [id]="'AvionE'+i.toString()" [(ngModel)]="volToAdd.avionList">
-                          <option value="">--Choisissez un avion--</option>
-                          @for(avion of avionList; track avion.id){
-                            <option [value]="avion.id">{{ avion.nom }}</option>
-                          }
-                        </select>
-                      </div>
-                    </div>
-                  }
-                  <div class="boutonEscale"><i class="fa-solid fa-add" (click)="ajouterEscale()" ></i> Ajouter Escale </div>
-                  <div>
-                    <label>Aeroport D'arrivee:</label>
-                    <br>
-
-                    <select name="Aa" id="aeroportA" [(ngModel)]="volToAdd.aeroportDArrivee">
-                      <option value="">--Choisissez un aeroport--</option>
-                      @for(aeroport of aeroportList; track aeroport.id){
-                        <option [value]="aeroport.id">{{ aeroport.nom }}</option>
-                      }
-                    </select>
-                  </div>
-                  <div>
-                    <label>Tarif:</label>
-                    <br>
-                    <input type="text" [(ngModel)]="volToAdd.tarifEconomiqueDeBase" name="tarif">
-                  </div>
-                  <br>
-                  <button type="submit">Enregistrer</button>
-                </form>
-              </div>
-            </div>
-          }
 
         }
       </tbody>
+      @if (showEditModal) {
+        <div class="modal">
+          <div class="modal-content">
+            <span class="closeBtn" (click)="isEditButtonClicked(selectedVol)">&times;</span>
+            <h2>Modifier Le Vol</h2>
+            <br>
+            <form (ngSubmit)="modifierVol(selectedVol)" class="form_content">
+              <div>
+                <label>Numero De Vol:</label>
+                <br>
+                <input type="text" [(ngModel)]="selectedVol.numeroDeVol" name="numero">
+              </div>
+              <div>
+                <label>Date de Depart:</label>
+                <br>
+                <input type="datetime-local" class="date-depart" [(ngModel)]="selectedVol.dateEtHeureDepart" name="dateD">
+              </div>
+              <div>
+                <label>Date d'arrive:</label>
+                <br>
+                <input type="datetime-local" class="date-arrivee" [(ngModel)]="selectedVol.dateEtHeureArrivee" name="dateA">
+              </div>
+              <div>
+                <div>
+                  <label>Aeroport De Depart:</label>
+                  <br>
 
+                  <select name="Aa" id="SaeroportD" [(ngModel)]="selectedVol.aeroportDepart">
+                    <option value="">--Choisissez un aeroport--</option>
+                    @for(aeroport of aeroportList; track aeroport.id){
+                      <option [value]="aeroport.id">{{ aeroport.nom }}</option>
+                    }
+                  </select>
+                </div>
+                <div>
+                  <label>Avion De depart:</label>
+                  <br>
+
+                  <select name="aDe" id="SAvionD" [(ngModel)]="selectedVol.avionDepart">
+                    <option value="">--Choisissez un avion--</option>
+                    @for(avion of avionList; track avion.id){
+                      <option [value]="avion.id">{{ avion.nom }}</option>
+                    }
+                  </select>
+                </div>
+              </div>
+              @for (escale of selectedVol.aeroportList; track i){
+                <div class="escale">
+                  <div>
+                    <label>Aeroport D'escale:</label>
+                    <br>
+
+                    <select [name]="i.toString()+'ar'" [id]="'aeroportE'+i.toString()" [(ngModel)]="selectedVol.aeroportList">
+                      <option value="">--Choisissez un aeroport--</option>
+                      @for(aeroport of aeroportList; track aeroport.id){
+                        <option [value]="aeroport.id">{{ aeroport.nom }}</option>
+                      }
+                    </select>
+                  </div>
+                  <div>
+                    <label>Avion D'escale:</label>
+                    <br>
+
+                    <select [name]="i.toString()+'av'" [id]="'AvionE'+i.toString()" [(ngModel)]="selectedVol.avionList">
+                      <option value="">--Choisissez un avion--</option>
+                      @for(avion of avionList; track avion.id){
+                        <option [value]="avion.id">{{ avion.nom }}</option>
+                      }
+                    </select>
+                  </div>
+                </div>
+              }
+              <div class="boutonEscale"><i class="fa-solid fa-add" (click)="ajouterEscale()" ></i> Ajouter Escale </div>
+              <div>
+                <label>Aeroport D'arrivee:</label>
+                <br>
+
+                <select name="Aa" id="SaeroportA" [(ngModel)]="selectedVol.aeroportDArrivee">
+                  <option value="">--Choisissez un aeroport--</option>
+                  @for(aeroport of aeroportList; track aeroport.id){
+                    <option [value]="aeroport.id">{{ aeroport.nom }}</option>
+                  }
+                </select>
+              </div>
+              <div>
+                <label>Tarif:</label>
+                <br>
+                <input type="text" [(ngModel)]="selectedVol.tarifEconomiqueDeBase" name="tarif">
+              </div>
+              <br>
+              <button type="submit">Enregistrer</button>
+            </form>
+          </div>
+        </div>
+      }
+
+      @if (showDeletedModal) {
+        <div class="modal">
+          <div class="modal-content">
+            <span class="closeBtn" (click)="isDeleteButtonClicked(selectedVol)">&times;</span>
+            <h2>Confirmer la suppression</h2>
+            <br>
+            <p>Voulez-vous vraiment supprimer cette ville?<br>
+              <span style="color: var(--red);">Tous les Aeroports seront egalement supprimer.</span>
+            </p>
+            <br>
+            <br>
+            <button (click)="supprimerVol(selectedVol)" class="modal_btn_del">Supprimer</button>
+            <button (click)="isDeleteButtonClicked(selectedVol)" class="modal_btn_up">Annuler</button>
+          </div>
+        </div>
+      }
+
+      @if (showAddModal) {
+        <div class="modal">
+          <div class="modal-content">
+            <span class="closeBtn" (click)="IsAddVolButtonClicked()">&times;</span>
+            <h2>Ajouter Un Vol</h2>
+            <br>
+            <form (ngSubmit)="ajouterVol()" class="form_content">
+              <div>
+                <label>Numero De Vol:</label>
+                <br>
+                <input type="text" [(ngModel)]="volToAdd.numeroDeVol" name="numero">
+              </div>
+              <div>
+                <label>Date de Depart:</label>
+                <br>
+                <input type="datetime-local" class="date-depart" [(ngModel)]="volToAdd.dateEtHeureDepart" name="dateD">
+              </div>
+              <div>
+                <label>Date d'arrive:</label>
+                <br>
+                <input type="datetime-local" class="date-arrivee" [(ngModel)]="volToAdd.dateEtHeureArrivee" name="dateA">
+              </div>
+              <div>
+                <div>
+                  <label>Aeroport De Depart:</label>
+                  <br>
+
+                  <select name="Aa" id="aeroportD" [(ngModel)]="volToAdd.aeroportDepart">
+                    <option value="">--Choisissez un aeroport--</option>
+                    @for(aeroport of aeroportList; track aeroport.id){
+                      <option [value]="aeroport.id">{{ aeroport.nom }}</option>
+                    }
+                  </select>
+                </div>
+                <div>
+                  <label>Avion De depart:</label>
+                  <br>
+
+                  <select name="aDe" id="AvionD" [(ngModel)]="volToAdd.avionDepart">
+                    <option value="">--Choisissez un avion--</option>
+                    @for(avion of avionList; track avion.id){
+                      <option [value]="avion.id">{{ avion.nom }}</option>
+                    }
+                  </select>
+                </div>
+              </div>
+              @for (escale of volToAdd.aeroportList; track i){
+                <div class="escale">
+                  <div>
+                    <label>Aeroport D'escale:</label>
+                    <br>
+
+                    <select [name]="i.toString()+'ar'" [id]="'aeroportE'+i.toString()" [(ngModel)]="volToAdd.aeroportList">
+                      <option value="">--Choisissez un aeroport--</option>
+                      @for(aeroport of aeroportList; track aeroport.id){
+                        <option [value]="aeroport.id">{{ aeroport.nom }}</option>
+                      }
+                    </select>
+                  </div>
+                  <div>
+                    <label>Avion D'escale:</label>
+                    <br>
+
+                    <select [name]="i.toString()+'av'" [id]="'AvionE'+i.toString()" [(ngModel)]="volToAdd.avionList">
+                      <option value="">--Choisissez un avion--</option>
+                      @for(avion of avionList; track avion.id){
+                        <option [value]="avion.id">{{ avion.nom }}</option>
+                      }
+                    </select>
+                  </div>
+                </div>
+              }
+              <div class="boutonEscale"><i class="fa-solid fa-add" (click)="ajouterEscale()" ></i> Ajouter Escale </div>
+              <div>
+                <label>Aeroport D'arrivee:</label>
+                <br>
+
+                <select name="Aa" id="aeroportA" [(ngModel)]="volToAdd.aeroportDArrivee">
+                  <option value="">--Choisissez un aeroport--</option>
+                  @for(aeroport of aeroportList; track aeroport.id){
+                    <option [value]="aeroport.id">{{ aeroport.nom }}</option>
+                  }
+                </select>
+              </div>
+              <div>
+                <label>Tarif:</label>
+                <br>
+                <input type="text" [(ngModel)]="volToAdd.tarifEconomiqueDeBase" name="tarif">
+              </div>
+              <br>
+              <button type="submit">Enregistrer</button>
+            </form>
+          </div>
+        </div>
+      }
     </table>
   </div>
 </div>
-
 

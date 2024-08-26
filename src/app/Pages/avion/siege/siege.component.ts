@@ -28,7 +28,6 @@ export class SiegeComponent implements OnInit{
   };
   errorMessage!: string;
   numeroPlace = 1;
-  aLaligne: boolean = false;
   tarifAffaire!: number;
   avion!: Avion;
   tarifEconomique!: number;
@@ -41,7 +40,6 @@ export class SiegeComponent implements OnInit{
   q1: number; q2: number; q3: number;
   showDestructionPopup: boolean = false;
   nbrOfSiege1 = 0;
-  variable: number = -1;
   variable1: string = "";
 
 
@@ -72,7 +70,6 @@ export class SiegeComponent implements OnInit{
   }
 
   ngOnInit() {
-    //this.genererSiege();
     this.idAvion = Number(this.route.snapshot.paramMap.get('id'));
     this.recupererListeDesSieges();
   }
@@ -260,16 +257,6 @@ export class SiegeComponent implements OnInit{
     this.showDestructionPopup = !this.showDestructionPopup;
   }
 
-  verifierSisuite(siege: Siege): boolean {
-    let alaLigne = false;
-    if(this.variable+1 != Number(siege.numero.slice(1))){
-      alaLigne = true;
-    }
-    this.variable = Number(siege.numero.slice(1));
-
-
-    return alaLigne;
-  }
 
   doEspace(siege: Siege) {
     let does = false;

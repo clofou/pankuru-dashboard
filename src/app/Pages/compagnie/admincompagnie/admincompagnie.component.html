@@ -1,21 +1,22 @@
 <div class="container">
   <div class="header">
-    <button (click)="IsAddSuperAdminButtonClicked()">Ajouter SuperAdmin</button>
+    <button (click)="IsAddAdminCompagnieButtonClicked()">Ajouter AdminCompagnie</button>
   </div>
   <div class="content">
     <table>
       <thead>
       <tr>
-        <th>Nom</th><th>Prenom</th><th>Email</th><th>Mot De Passe</th><th>Action</th>
+        <th>Nom</th><th>Prenom</th><th>Email</th><th>Mot De Passe</th><th>Compagnie</th><th>Action</th>
       </tr>
       </thead>
       <tbody>
-        @for (item of superadminList; track item.id){
+        @for (item of admincompagnieList; track item.id){
           <tr>
             <td>{{ item.nom }}</td>
             <td>{{ item.prenom }}</td>
             <td>{{ item.email }}</td>
             <td>*********</td>
+            <td>{{ item.compagnie.nom }}</td>
             <td class="action">
               <div class="button1" (click)="isDeleteButtonClicked(item)"><i class="fa-solid fa-trash"></i></div>
               <div class="button2" (click)="isEditButtonClicked(item)"><i class="fa-solid fa-pen"></i></div>
@@ -29,39 +30,39 @@
         @if (showEditModal) {
           <div class="modal">
             <div class="modal-content">
-              <span class="closeBtn" (click)="isEditButtonClicked(selectedSuperAdmin)">&times;</span>
-              <h2>Modifier Le SuperAdmin</h2>
+              <span class="closeBtn" (click)="isEditButtonClicked(selectedAdminCompagnie)">&times;</span>
+              <h2>Modifier L'AdminCompagnie</h2>
               <br>
-              <form (ngSubmit)="modifierSuperAdmin(selectedSuperAdmin)" class="form_content">
+              <form (ngSubmit)="modifierAdminCompagnie(selectedAdminCompagnie)" class="form_content">
                 <div>
                   <label>Nom:</label>
                   <br>
-                  <input type="text" [(ngModel)]="selectedSuperAdmin.nom" name="nom">
+                  <input type="text" [(ngModel)]="selectedAdminCompagnie.nom" name="nom">
                 </div>
                 <div>
                   <label>Prenom:</label>
                   <br>
-                  <input type="text" [(ngModel)]="selectedSuperAdmin.prenom" name="prenom">
+                  <input type="text" [(ngModel)]="selectedAdminCompagnie.prenom" name="prenom">
                 </div>
                 <div>
                   <label>Email:</label>
                   <br>
-                  <input type="text" [(ngModel)]="selectedSuperAdmin.email" name="email">
+                  <input type="text" [(ngModel)]="selectedAdminCompagnie.email" name="email">
                 </div>
                 <div>
                   <label>Mot de passe:</label>
                   <br>
-                  <input type="text" [(ngModel)]="selectedSuperAdmin.password" name="motdePasse">
+                  <input type="text" [(ngModel)]="selectedAdminCompagnie.password" name="motdePasse">
                 </div>
                 <div>
                   <label>Adresse:</label>
                   <br>
-                  <input type="text" [(ngModel)]="selectedSuperAdmin.addresse" name="adresse">
+                  <input type="text" [(ngModel)]="selectedAdminCompagnie.addresse" name="adresse">
                 </div>
                 <div>
                   <label>Numero de telephone:</label>
                   <br>
-                  <input type="text" [(ngModel)]="selectedSuperAdmin.numeroDeTelephone" name="numero">
+                  <input type="text" [(ngModel)]="selectedAdminCompagnie.numeroDeTelephone" name="numero">
                 </div>
                 <br>
                 <button type="submit">Enregistrer</button>
@@ -72,54 +73,54 @@
         @if (showDeletedModal) {
           <div class="modal">
             <div class="modal-content">
-              <span class="closeBtn" (click)="isDeleteButtonClicked(selectedSuperAdmin)">&times;</span>
+              <span class="closeBtn" (click)="isDeleteButtonClicked(selectedAdminCompagnie)">&times;</span>
               <h2>Confirmer la suppression</h2>
               <br>
-              <p>Voulez-vous vraiment Bloquer cette SuperAdmin?<br>
+              <p>Voulez-vous vraiment Bloquer cette AdminCompagnie?<br>
               </p>
               <br>
               <br>
-              <button (click)="supprimerSuperAdmin(selectedSuperAdmin)" class="modal_btn_del">Supprimer</button>
-              <button (click)="isDeleteButtonClicked(selectedSuperAdmin)" class="modal_btn_up">Annuler</button>
+              <button (click)="supprimerAdminCompagnie(selectedAdminCompagnie)" class="modal_btn_del">Supprimer</button>
+              <button (click)="isDeleteButtonClicked(selectedAdminCompagnie)" class="modal_btn_up">Annuler</button>
             </div>
           </div>
         }
         @if (showAddModal) {
           <div class="modal">
             <div class="modal-content">
-              <span class="closeBtn" (click)="IsAddSuperAdminButtonClicked()">&times;</span>
-              <h2>Ajouter Un SuperAdmin</h2>
+              <span class="closeBtn" (click)="IsAddAdminCompagnieButtonClicked()">&times;</span>
+              <h2>Ajouter Une AdminCompagnie</h2>
               <br>
-              <form (ngSubmit)="ajouterSuperAdmin()" class="form_content">
+              <form (ngSubmit)="ajouterAdminCompagnie()" class="form_content">
                 <div>
                   <label>Nom:</label>
                   <br>
-                  <input type="text" [(ngModel)]="superadminToAdd.nom" name="nom">
+                  <input type="text" [(ngModel)]="admincompagnieToAdd.nom" name="nom">
                 </div>
                 <div>
                   <label>Prenom:</label>
                   <br>
-                  <input type="text" [(ngModel)]="superadminToAdd.prenom" name="prenom">
+                  <input type="text" [(ngModel)]="admincompagnieToAdd.prenom" name="prenom">
                 </div>
                 <div>
                   <label>Email:</label>
                   <br>
-                  <input type="text" [(ngModel)]="superadminToAdd.email" name="email">
+                  <input type="text" [(ngModel)]="admincompagnieToAdd.email" name="email">
                 </div>
                 <div>
                   <label>Mot de passe:</label>
                   <br>
-                  <input type="text" [(ngModel)]="superadminToAdd.password" name="motdePasse">
+                  <input type="text" [(ngModel)]="admincompagnieToAdd.password" name="motdePasse">
                 </div>
                 <div>
                   <label>Adresse:</label>
                   <br>
-                  <input type="text" [(ngModel)]="superadminToAdd.addresse" name="adresse">
+                  <input type="text" [(ngModel)]="admincompagnieToAdd.addresse" name="adresse">
                 </div>
                 <div>
                   <label>Numero de telephone:</label>
                   <br>
-                  <input type="text" [(ngModel)]="superadminToAdd.numeroDeTelephone" name="numero">
+                  <input type="text" [(ngModel)]="admincompagnieToAdd.numeroDeTelephone" name="numero">
                 </div>
                 <br>
                 <button type="submit">Enregistrer</button>

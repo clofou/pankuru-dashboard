@@ -1,7 +1,7 @@
 export { AccueilComponent } from './accueil/accueil.component';
 export { ConnexionComponent } from './connexion/connexion.component';
 export { VolComponent } from './vol/vol.component';
-export { SuperadminComponent } from './superadmin/superadmin.component';
+export { SuperAdminComponent } from './superadmin/superadmin.component';
 export { PersonnelComponent } from './personnel/personnel.component';
 export { ParametreComponent } from './parametre/parametre.component';
 export { FaqComponent } from './faq/faq.component';
@@ -13,3 +13,4 @@ export { VillesComponent } from './aeroport/villes/villes.component';
 export { AvionComponent } from './avion/avion.component';
 export { SiegeComponent } from './avion/siege/siege.component';
 export { PassagerComponent } from './vol/passager/passager.component';
+export { AdminCompagnieComponent } from './compagnie/admincompagnie/admincompagnie.component';

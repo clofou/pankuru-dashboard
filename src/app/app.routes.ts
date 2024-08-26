@@ -11,7 +11,7 @@ export const routes: Routes = [
             { path: "", redirectTo: "/pankuru/acceuil", pathMatch: "full"},
             { path: "acceuil", title: "acceuil", component: Components.AccueilComponent, canActivate: [AuthGuardService] },
             { path: "admin", title: "admin", component: Components.AdminComponent, canActivate: [AuthGuardService] },
-            { path: "superadmin", title: "superadmin", component: Components.SuperadminComponent, canActivate: [AuthGuardService] },
+            { path: "superadmin", title: "superadmin", component: Components.SuperAdminComponent, canActivate: [AuthGuardService] },
             { path: "compagnie", title: "compagnie", component: Components.CompagnieComponent, canActivate: [AuthGuardService] },
             { path: "faq", title: "faq", component: Components.FaqComponent, canActivate: [AuthGuardService] },
             { path: "parametre", title: "parametre", component: Components.ParametreComponent, canActivate: [AuthGuardService] },
@@ -22,6 +22,8 @@ export const routes: Routes = [
             { path: "ville/:id", title: "ville", component: Components.VillesComponent, canActivate: [AuthGuardService] },
             { path: "siege/:id", title: "siege", component: Components.SiegeComponent, canActivate: [AuthGuardService] },
             { path: "passager/:id", title: "passage", component: Components.PassagerComponent, canActivate: [AuthGuardService] },
+            { path: "admincompagnie/:id", title: "admincompagnie", component: Components.AdminCompagnieComponent, canActivate: [AuthGuardService] },
+
         ]
      },
 

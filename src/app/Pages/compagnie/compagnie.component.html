@@ -1,1 +1,166 @@
-<p>compagnie works!</p>
+<div class="container">
+  <div class="header">
+    <button (click)="IsAddCompagnieButtonClicked()">Ajouter Compagnie</button>
+  </div>
+  <div class="content">
+    <table>
+      <thead>
+      <tr>
+        <th>Nom</th><th>Matricule</th><th>Code IATA</th><th>Site Web</th><th>Bloque ?</th><th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (item of compagnieList; track item.id){
+          <tr [ngClass]="{'locked': item.locked}">
+            <td (click)="goToAdminCompagniePage(item)">{{ item.nom }}</td>
+            <td (click)="goToAdminCompagniePage(item)">{{ item.matricule }}</td>
+            <td (click)="goToAdminCompagniePage(item)">{{ item.codeIATA }}</td>
+            <td (click)="goToAdminCompagniePage(item)">{{ item.siteWeb }}</td>
+            <td (click)="goToAdminCompagniePage(item)">{{ item.locked }}</td>
+            <td class="action">
+              <div class="button1" (click)="isDeleteButtonClicked(item)"><i class="fa-solid fa-lock"></i></div>
+              <div class="button2" (click)="isEditButtonClicked(item)"><i class="fa-solid fa-pen"></i></div>
+            </td>
+          </tr>
+
+
+
+        }
+      </tbody>
+      @if (showEditModal) {
+        <div class="modal">
+          <div class="modal-content">
+            <span class="closeBtn" (click)="isEditButtonClicked(selectedCompagnie)">&times;</span>
+            <h2>Modifier La Compagnie</h2>
+            <br>
+            <form (ngSubmit)="modifierCompagnie(selectedCompagnie)" class="form_content">
+              <div>
+                <label>Nom:</label>
+                <br>
+                <input type="text" [(ngModel)]="selectedCompagnie.nom" name="nom">
+              </div>
+              <div>
+                <label>Matricule:</label>
+                <br>
+                <input type="text" [(ngModel)]="selectedCompagnie.matricule" name="matricule">
+              </div>
+              <div>
+                <label>Code IATA:</label>
+                <br>
+                <input type="text" [(ngModel)]="selectedCompagnie.codeIATA" name="iata">
+              </div>
+              <div>
+                <label>Code ICAO:</label>
+                <br>
+                <input type="text" [(ngModel)]="selectedCompagnie.codeICAO" name="icao">
+              </div>
+              <div>
+                <label>Url Logo:</label>
+                <br>
+                <input type="text" [(ngModel)]="selectedCompagnie.logoUrl" name="logo">
+              </div>
+              <div>
+                <label>Site Web:</label>
+                <br>
+                <input type="text" [(ngModel)]="selectedCompagnie.siteWeb" name="site">
+              </div>
+              <div>
+                <label>Numero de Licence:</label>
+                <br>
+                <input type="text" [(ngModel)]="selectedCompagnie.numeroLicence" name="licence">
+              </div>
+              <div>
+                <label>Email:</label>
+                <br>
+                <input type="text" [(ngModel)]="selectedCompagnie.email" name="mail">
+              </div>
+              <div>
+                <label>Numero De Telephone:</label>
+                <br>
+                <input type="text" [(ngModel)]="selectedCompagnie.numeroTelephone" name="telephone">
+              </div>
+              <br>
+              <button type="submit">Enregistrer</button>
+            </form>
+          </div>
+        </div>
+      }
+      @if (showDeletedModal) {
+        <div class="modal">
+          <div class="modal-content">
+            <span class="closeBtn" (click)="isDeleteButtonClicked(selectedCompagnie)">&times;</span>
+            <h2>Bloquer ou Depbloquer</h2>
+            <br>
+            <p>Voulez-vous vraiment Bloquer/Debloquer cette Compagnie?<br>
+            </p>
+            <br>
+            <br>
+            <button (click)="supprimerVille(selectedCompagnie)" class="modal_btn_del">B/D</button>
+            <button (click)="isDeleteButtonClicked(selectedCompagnie)" class="modal_btn_up">Annuler</button>
+          </div>
+        </div>
+      }
+      @if (showAddModal) {
+        <div class="modal">
+          <div class="modal-content">
+            <span class="closeBtn" (click)="IsAddCompagnieButtonClicked()">&times;</span>
+            <h2>Ajouter Une Compagnie</h2>
+            <br>
+            <form (ngSubmit)="ajouterCompagnie()" class="form_content">
+              <div>
+                <label>Nom:</label>
+                <br>
+                <input type="text" [(ngModel)]="compagnieToAdd.nom" name="nom">
+              </div>
+              <div>
+                <label>Matricule:</label>
+                <br>
+                <input type="text" [(ngModel)]="compagnieToAdd.matricule" name="matricule">
+              </div>
+              <div>
+                <label>Code IATA:</label>
+                <br>
+                <input type="text" [(ngModel)]="compagnieToAdd.codeIATA" name="iata">
+              </div>
+              <div>
+                <label>Code ICAO:</label>
+                <br>
+                <input type="text" [(ngModel)]="compagnieToAdd.codeICAO" name="icao">
+              </div>
+              <div>
+                <label>Url Logo:</label>
+                <br>
+                <input type="text" [(ngModel)]="compagnieToAdd.logoUrl" name="logo">
+              </div>
+              <div>
+                <label>Site Web:</label>
+                <br>
+                <input type="text" [(ngModel)]="compagnieToAdd.siteWeb" name="site">
+              </div>
+              <div>
+                <label>Numero de Licence:</label>
+                <br>
+                <input type="text" [(ngModel)]="compagnieToAdd.numeroLicence" name="licence">
+              </div>
+              <div>
+                <label>Email:</label>
+                <br>
+                <input type="text" [(ngModel)]="compagnieToAdd.email" name="email">
+              </div>
+              <div>
+                <label>Numero De Telephone:</label>
+                <br>
+                <input type="text" [(ngModel)]="compagnieToAdd.numeroTelephone" name="telephone">
+              </div>
+              <br>
+              <button type="submit">Enregistrer</button>
+            </form>
+          </div>
+        </div>
+      }
+
+    </table>
+  </div>
+</div>
+
+

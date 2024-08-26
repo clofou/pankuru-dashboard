@@ -65,6 +65,7 @@ export class AvionComponent implements OnInit{
         console.log(data);
         this.toastr.success("Avion enregistre avec Succees");
         this.isEditButtonClicked(selectedAvion);
+        this.getAllAvion();
       },
       error: (err) => {
         let errorMessage: string = "Erreur lors de la modification de l'avion";
@@ -84,6 +85,8 @@ export class AvionComponent implements OnInit{
       {
         next: () => {
           this.toastr.error("Suppresion effectue avec success.");
+          this.isDeleteButtonClicked(selectedAvion);
+          this.getAllAvion();
         },
         error: (err) => {
           console.log(err);
@@ -97,6 +100,8 @@ export class AvionComponent implements OnInit{
     this.crudService.post("avion", this.avionToAdd).subscribe({
       next: (data) => {
         console.log(data);
+        this.IsAddAvionButtonClicked();
+        this.getAllAvion();
         this.toastr.success("Avion "+ this.avionToAdd.nom + " ajouter avec succeess.")
       },
       error: (err) => {

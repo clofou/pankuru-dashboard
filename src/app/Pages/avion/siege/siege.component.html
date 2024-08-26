@@ -14,27 +14,27 @@
     @if(siegeList.length === 0){
       <form (ngSubmit)="genererSiege()">
         <div class="tete1">
-          <input type="number" [(ngModel)]="nlTete" name="nlTete">
+          <input type="number" min="0" [(ngModel)]="nlTete" name="nlTete">
           <div>
-            <input type="number" [(ngModel)]="t1" name="t1">
-            <input type="number" [(ngModel)]="t2" name="t2">
-            <input type="number" [(ngModel)]="t3" name="t3">
+            <input type="number" min="0" [(ngModel)]="t1" name="t1">
+            <input type="number" min="0" [(ngModel)]="t2" name="t2">
+            <input type="number" min="0" [(ngModel)]="t3" name="t3">
           </div>
         </div>
         <div class="tete1">
-          <input type="number" [(ngModel)]="nlCorps" name="nlCorps">
+          <input type="number" min="0" [(ngModel)]="nlCorps" name="nlCorps">
           <div>
-            <input type="number" [(ngModel)]="c1" name="c1">
-            <input type="number" [(ngModel)]="c2" name="c2">
-            <input type="number" [(ngModel)]="c3" name="c3">
+            <input type="number" min="0" [(ngModel)]="c1" name="c1">
+            <input type="number" min="0" [(ngModel)]="c2" name="c2">
+            <input type="number" min="0" [(ngModel)]="c3" name="c3">
           </div>
         </div>
         <div class="tete1">
-          <input type="number" [(ngModel)]="nlQueue" name="nlQueue">
+          <input type="number" min="0" [(ngModel)]="nlQueue" name="nlQueue">
           <div>
-            <input type="number" [(ngModel)]="q1" name="q1">
-            <input type="number" [(ngModel)]="q2" name="q2">
-            <input type="number" [(ngModel)]="q3" name="q3">
+            <input type="number" min="0" [(ngModel)]="q1" name="q1">
+            <input type="number" min="0" [(ngModel)]="q2" name="q2">
+            <input type="number" min="0" [(ngModel)]="q3" name="q3">
           </div>
         </div>
       </form>
@@ -90,4 +90,5 @@
     </div>
   }
 </div>
+
 

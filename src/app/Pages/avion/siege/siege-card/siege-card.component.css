@@ -65,3 +65,43 @@
   white-space: nowrap;
   z-index: 1000;
 }
+
+.affaire{
+  .chair {
+    background-color: #700909;
+  }
+  .chair::before {
+    background-color: #af0a0a;
+  }
+  .seat {
+    background-color: #dc0322;
+  }
+
+  .headrest {
+    background-color: #af0a0a;
+  }
+
+  .footrest {
+    background-color: #af0a0a;
+  }
+}
+
+.nondisponible{
+  .chair {
+    background-color: #818080;
+  }
+  .chair::before {
+    background-color: #4a4a4a;
+  }
+  .seat {
+    background-color: #c5c2c2;
+  }
+
+  .headrest {
+    background-color: #4a4a4a;
+  }
+
+  .footrest {
+    background-color: #4a4a4a;
+  }
+}

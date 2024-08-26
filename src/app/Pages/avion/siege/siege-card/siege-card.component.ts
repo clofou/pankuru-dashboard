@@ -4,6 +4,7 @@ import {GlobalCrudService} from "../../../../services/global-crud.service";
 import {ToastrService} from "ngx-toastr";
 import {NgClass} from "@angular/common";
 import {Siege} from "../../../../models/Siege/Siege";
+import {SiegeDisponibilite} from "../../../../models/Enum/SiegeDisponibilite";
 
 @Component({
   selector: 'app-siege-card',
@@ -43,4 +44,6 @@ export class SiegeCardComponent {
       }
     })
   }
+
+  protected readonly SiegeDisponibilite = SiegeDisponibilite;
 }
