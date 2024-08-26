@@ -68,7 +68,7 @@ export class SiegeComponent implements OnInit{
     this.tarifEconomique = 25;
     this.tarifAffaire = 75;
     this.avion = new Avion();
-    this.avion.id = 1;
+    this.avion.id = Number(this.route.snapshot.paramMap.get('id'));
   }
 
   ngOnInit() {
@@ -110,7 +110,7 @@ export class SiegeComponent implements OnInit{
     let a = 0;
     let ok = false;
 
-    for(let i=0; i< siegeTrier.length-1; i++) {
+    for(let i=0; i< siegeTrier.length; i++) {
 
       if(ok){
         a++;
@@ -119,9 +119,12 @@ export class SiegeComponent implements OnInit{
       }
 
       lettreEnCours = siegeTrier[i].numero[0];
-      if((lettreEnCours=='C' || lettreEnCours=='F' || lettreEnCours=='I') && (siegeTrier[i+1].numero[0]== "A" || siegeTrier[i+1].numero[0]== "D" || siegeTrier[i+1].numero[0]== "G")){
-        ok = true;
+      if(i+1 != siegeTrier.length){
+        if((lettreEnCours=='C' || lettreEnCours=='F' || lettreEnCours=='I') && (siegeTrier[i+1].numero[0]== "A" || siegeTrier[i+1].numero[0]== "D" || siegeTrier[i+1].numero[0]== "G")){
+          ok = true;
+        }
       }
+
       siegeTT[a].push(siegeTrier[i]);
     }
 

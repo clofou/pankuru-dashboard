@@ -28,6 +28,7 @@ export class VilleCardComponent implements OnInit{
   showDeleteModal: boolean = false;
   selectedAeroport!: Aeroport;
   aeroportToAdd!: Aeroport;
+  showVilleDeleteModal: boolean = false;
 
   constructor(private crudService: GlobalCrudService, private toastr: ToastrService) {
   }
@@ -115,5 +116,4 @@ export class VilleCardComponent implements OnInit{
   isEditVilleButttonClicked(ville: Ville) {
     this.isVilleEditListener.emit(ville)
   }
-
 }

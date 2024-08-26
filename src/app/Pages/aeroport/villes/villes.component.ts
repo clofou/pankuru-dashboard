@@ -86,6 +86,7 @@ export class VillesComponent implements OnInit{
         next: () => {
           this.getListVilles();
           this.selectedVille.resetProperties();
+          this.toastr.error("Ville Supprimer")
           this.isDeleteButtonClicked(selectedVille);
         },
         error: (err) => {

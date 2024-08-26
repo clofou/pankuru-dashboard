@@ -31,7 +31,7 @@ input{
 .airplane {
   background-color: #ccc;
   border-radius: 150px 150px 0 0;
-  width: 300px;
+  min-width: 300px;
   display: flex;
   position: relative;
   align-items: center;
