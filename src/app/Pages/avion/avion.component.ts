@@ -97,17 +97,23 @@ export class AvionComponent implements OnInit{
   }
 
   ajouterAvion() {
-    this.crudService.post("avion", this.avionToAdd).subscribe({
-      next: (data) => {
-        console.log(data);
-        this.IsAddAvionButtonClicked();
-        this.getAllAvion();
-        this.toastr.success("Avion "+ this.avionToAdd.nom + " ajouter avec succeess.")
-      },
-      error: (err) => {
-        console.log(err);
-        this.toastr.error("Erreur lors de l'ajout de l'avion")
-      }
-    })
+    if(this.avionToAdd.nom.trim() == ""){
+      this.toastr.error("Erreur lors de l'ajout de l'avion")
+      return;
+    }else{
+      this.crudService.post("avion", this.avionToAdd).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.IsAddAvionButtonClicked();
+          this.getAllAvion();
+          this.toastr.success("Avion "+ this.avionToAdd.nom + " ajouter avec succeess.")
+        },
+        error: (err) => {
+          console.log(err);
+          this.toastr.error("Erreur lors de l'ajout de l'avion")
+        }
+      })
+    }
+
   }
 }

@@ -91,18 +91,24 @@ export class PersonnelComponent implements OnInit{
   }
 
   ajouterPersonnel() {
-    this.crudService.post("personnel", this.personnelToAdd).subscribe({
-      next: () => {
-        this.toastr.success("Personnel Embauche avec success.");
-        this.isAddButtonClicked();
-        this.recupererListeDePersonnels();
-        this.personnelToAdd = new Personnel();
-      },
-      error: (err) => {
-        this.toastr.error("Erreur lors de l'ajout du personnel.");
-        console.log("ERREUR VECNA AJOUT: " + err);
-      }
-    })
+    if(this.personnelToAdd.nom.trim() == "" || this.personnelToAdd.email == "" || this.personnelToAdd.addresse == "" || this.personnelToAdd.poste==""){
+      this.toastr.error("Erreur lors de l'ajout du personnel.");
+      return;
+    } else {
+      this.crudService.post("personnel", this.personnelToAdd).subscribe({
+        next: () => {
+          this.toastr.success("Personnel Embauche avec success.");
+          this.isAddButtonClicked();
+          this.recupererListeDePersonnels();
+          this.personnelToAdd = new Personnel();
+        },
+        error: (err) => {
+          this.toastr.error("Erreur lors de l'ajout du personnel.");
+          console.log("ERREUR VECNA AJOUT: " + err);
+        }
+      })
+    }
+
   }
 
   modifierPersonnel(selectedPersonnel: Personnel) {

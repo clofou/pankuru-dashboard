@@ -68,6 +68,7 @@ export class CompagnieComponent implements OnInit{
         console.log(data);
         this.toastr.success("Compagnie enregistre avec Succees");
         this.isEditButtonClicked(selectedCompagnie);
+        this.getAllCompagnie();
       },
       error: (err) => {
         let errorMessage: string = "Erreur lors de la modification de l'compagnie";
@@ -87,6 +88,7 @@ export class CompagnieComponent implements OnInit{
       {
         next: () => {
           this.toastr.error("Compte bloque avec success.");
+          this.isDeleteButtonClicked(selectedCompagnie);
           this.getAllCompagnie();
         },
         error: (err) => {
@@ -98,15 +100,21 @@ export class CompagnieComponent implements OnInit{
   }
 
   ajouterCompagnie() {
-    this.crudService.post("compagnie", this.compagnieToAdd).subscribe({
-      next: (data) => {
-        console.log(data);
-        this.toastr.success("Compagnie "+ this.compagnieToAdd.nom + " ajouter avec succeess.")
-      },
-      error: (err) => {
-        console.log(err);
-        this.toastr.error("Erreur lors de l'ajout de l'compagnie")
-      }
-    })
+    if(this.compagnieToAdd.nom.trim() == "" || this.compagnieToAdd.numeroTelephone == "" || this.compagnieToAdd.matricule == ""){
+      this.toastr.error("Erreur lors de l'ajout de l'compagnie")
+    }else{
+      this.crudService.post("compagnie", this.compagnieToAdd).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.toastr.success("Compagnie "+ this.compagnieToAdd.nom + " ajouter avec succeess.");
+          this.IsAddCompagnieButtonClicked();
+          this.getAllCompagnie();
+        },
+        error: (err) => {
+          console.log(err);
+          this.toastr.error("Erreur lors de l'ajout de l'compagnie")
+        }
+      })
+    }
   }
 }

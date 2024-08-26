@@ -185,32 +185,35 @@
                   </select>
                 </div>
               </div>
-              @for (escale of volToAdd.aeroportList; track i){
-                <div class="escale">
+              <div class="escale">
+              @for (escaleAeroport of volToAdd.aeroportList; track escaleAeroport.id){
+
                   <div>
                     <label>Aeroport D'escale:</label>
                     <br>
 
-                    <select [name]="i.toString()+'ar'" [id]="'aeroportE'+i.toString()" [(ngModel)]="volToAdd.aeroportList">
+                    <select [name]="i.toString()+'ar'" [id]="'aeroportE'+i.toString()" [(ngModel)]="volToAdd.aeroportList[-i-1]">
                       <option value="">--Choisissez un aeroport--</option>
                       @for(aeroport of aeroportList; track aeroport.id){
                         <option [value]="aeroport.id">{{ aeroport.nom }}</option>
                       }
                     </select>
                   </div>
+              }
+                @for (escaleAVion of volToAdd.avionList; track escaleAVion.id){
                   <div>
                     <label>Avion D'escale:</label>
                     <br>
 
-                    <select [name]="i.toString()+'av'" [id]="'AvionE'+i.toString()" [(ngModel)]="volToAdd.avionList">
+                    <select [name]="i.toString()+'av'" [id]="'AvionE'+i.toString()" [(ngModel)]="escaleAVion.id">
                       <option value="">--Choisissez un avion--</option>
                       @for(avion of avionList; track avion.id){
                         <option [value]="avion.id">{{ avion.nom }}</option>
                       }
                     </select>
                   </div>
+                }
                 </div>
-              }
               <div class="boutonEscale"><i class="fa-solid fa-add" (click)="ajouterEscale()" ></i> Ajouter Escale </div>
               <div>
                 <label>Aeroport D'arrivee:</label>

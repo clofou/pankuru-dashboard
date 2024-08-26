@@ -60,24 +60,31 @@ export class VillesComponent implements OnInit{
   }
 
   ajouterVille() {
-    console.log(this.villeToAdd);
-    let pays: Pays = new Pays("", "");
-    pays.id = this.idPays;
-    this.villeToAdd.pays = pays;
-    this.crudService.post("ville", this.villeToAdd).subscribe(
+    if (this.villeToAdd.nom.trim() == ""){
+      this.toastr.error("Erreur lors de l'ajout de la ville");
+      return;
+    }else{
+      console.log(this.villeToAdd);
+      let pays: Pays = new Pays("", "");
+      pays.id = this.idPays;
+      this.villeToAdd.pays = pays;
+      this.crudService.post("ville", this.villeToAdd).subscribe(
 
-      {
-        next: () => {
-          this.toastr.success("Ville ajoute avec success")
-          this.getListVilles();
-          this.isAddButttonClicked();
-          this.villeToAdd.resetProperties();
-        },
-        error: (err) => {
-          console.log(err);
+        {
+          next: () => {
+            this.toastr.success("Ville ajoute avec success");
+            this.getListVilles();
+            this.isAddButttonClicked();
+            this.villeToAdd.resetProperties();
+          },
+          error: (err) => {
+            this.toastr.error("Erreur lors de l'ajout de la ville");
+            console.log(err);
+          }
         }
-      }
-    )
+      )
+    }
+
   }
 
   supprimerVille(selectedVille: Ville) {

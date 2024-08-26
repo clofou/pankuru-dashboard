@@ -1,5 +1,10 @@
 .escale{
   display: flex;
+  flex-direction: column;
+  background-color: rgba(46, 207, 207, 0.3);
+  margin-top: 10px;
+  border: 1px solid rgba(46, 207, 207, 1);
+  padding: 8px;
 }
 .boutonEscale{
   margin: 10px 0;

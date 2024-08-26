@@ -1,3 +1,8 @@
 .locked{
   color: red;
 }
+tr{
+  td{
+    cursor: pointer;
+  }
+}

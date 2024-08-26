@@ -32,7 +32,7 @@ export class VolComponent implements OnInit{
     this.showAddModal = false;
     this.showEditModal = false;
     this.showDeletedModal = false;
-    this.i = -1;
+    this.i = 0;
     this.aeroportList = [];
     this.avionList = [];
   }
@@ -137,9 +137,12 @@ export class VolComponent implements OnInit{
     this.volToAdd.aeroportDepart = this.aeroportList.filter((value) => {return value.id === Number(this.volToAdd.aeroportDepart)})[0];
     this.volToAdd.aeroportDArrivee = this.aeroportList.filter((value) => {return value.id === Number(this.volToAdd.aeroportDArrivee)})[0];
     this.volToAdd.avionDepart = this.avionList.filter((value) => {return value.id === Number(this.volToAdd.avionDepart)})[0];
+
+    console.log(this.volToAdd.aeroportList);
     if (this.volToAdd.numeroDeVol =='' || this.volToAdd.avionDepart == null || this.volToAdd.aeroportDepart == null || this.volToAdd.tarifEconomiqueDeBase == 0){
       return;
     }
+    /*
 
     this.crudService.post("vol", this.volToAdd).subscribe({
       next: (data) => {
@@ -154,12 +157,18 @@ export class VolComponent implements OnInit{
         console.log(err);
         this.toastr.error("Erreur lors de l'ajout de l'vol")
       }
-    })
+    })*/
   }
 
   ajouterEscale() {
+    let avion = new Avion();
+    avion.id = this.i;
+    let airport = new Aeroport();
+    airport.id = this.i;
 
-    this.volToAdd.avionList.push(new Avion());
-    this.volToAdd.aeroportList.push(new Aeroport());
+    this.volToAdd.avionList.push(avion);
+    this.volToAdd.aeroportList.push(airport);
+    console.log(this.volToAdd.aeroportList);
+    this.i--;
   }
 }

@@ -51,19 +51,26 @@ export class PaysComponent implements OnInit {
 
 
   ajouterPays() {
-    this.crudService.post("pays", this.paysToAdd).subscribe(
-      {
-        next: () => {
-          this.toastr.success("Pays ajoute avec success")
-          this.getAllPays();
-          this.isAddButttonClicked();
-          this.paysToAdd.resetProperties();
-        },
-        error: (err) => {
-          console.log(err);
+    if(this.paysToAdd.nom.trim() == ""){
+      this.toastr.error("Erreur lors de l'ajout du pays");
+      return;
+    }else{
+      this.crudService.post("pays", this.paysToAdd).subscribe(
+        {
+          next: () => {
+            this.toastr.success("Pays ajoute avec success")
+            this.getAllPays();
+            this.isAddButttonClicked();
+            this.paysToAdd.resetProperties();
+          },
+          error: (err) => {
+            console.log(err);
+            this.toastr.error("Erreur lors de l'ajout du pays");
+          }
         }
-      }
-    )
+      )
+    }
+
   }
   modifierPays(selectedPays: Pays) {
     this.crudService.update("pays", selectedPays.id!, selectedPays).subscribe(

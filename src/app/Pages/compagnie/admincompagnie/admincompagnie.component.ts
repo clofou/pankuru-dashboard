@@ -61,6 +61,7 @@ export class AdminCompagnieComponent implements OnInit{
   isEditButtonClicked(selectedAdminCompagnie: AdminCompagnie) {
     this.showEditModal = !this.showEditModal;
     this.selectedAdminCompagnie = selectedAdminCompagnie;
+    this.selectedAdminCompagnie.password = "********";
   }
 
   modifierAdminCompagnie(selectedAdminCompagnie: AdminCompagnie) {
@@ -104,20 +105,27 @@ export class AdminCompagnieComponent implements OnInit{
   }
 
   ajouterAdminCompagnie() {
-    let compagnie: Compagnie = new Compagnie();
-    compagnie.id = this.idCompagnie;
-    this.admincompagnieToAdd.compagnie = compagnie;
-    this.crudService.post("admincompagnie", this.admincompagnieToAdd).subscribe({
-      next: (data) => {
-        console.log(data);
-        this.IsAddAdminCompagnieButtonClicked();
-        this.getAllAdminCompagnie();
-        this.toastr.success("AdminCompagnie "+ this.admincompagnieToAdd.nom + " ajouter avec succeess.")
-      },
-      error: (err) => {
-        console.log(err);
-        this.toastr.error("Erreur lors de l'ajout de l'admincompagnie")
-      }
-    })
+
+    if(this.admincompagnieToAdd.nom.trim() == "" || this.admincompagnieToAdd.email == "" || this.admincompagnieToAdd.password== ""){
+      this.toastr.error("Erreur lors de l'ajout de l'admincompagnie");
+      return;
+    } else {
+      let compagnie: Compagnie = new Compagnie();
+      compagnie.id = this.idCompagnie;
+      this.admincompagnieToAdd.compagnie = compagnie;
+      this.crudService.post("admincompagnie", this.admincompagnieToAdd).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.IsAddAdminCompagnieButtonClicked();
+          this.getAllAdminCompagnie();
+          this.toastr.success("AdminCompagnie "+ this.admincompagnieToAdd.nom + " ajouter avec succeess.")
+        },
+        error: (err) => {
+          console.log(err);
+          this.toastr.error("Erreur lors de l'ajout de l'admincompagnie")
+        }
+      })
+    }
+
   }
 }
