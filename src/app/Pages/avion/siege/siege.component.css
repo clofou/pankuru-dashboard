@@ -29,16 +29,19 @@ input{
 }
 
 .airplane {
-  width: 300px;
-  height: 600px;
   background-color: #ccc;
   border-radius: 150px 150px 0 0;
-  position: relative;
-  overflow: hidden;
+  width: 300px;
   display: flex;
-  flex-direction: column;
+  position: relative;
   align-items: center;
-  padding-top: 50px;
+  justify-content: center;
+  padding: 80px 20px 50px 20px;
+  box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.85);
+}
+br{
+  flex-wrap: wrap;
+  wrap-option: wrap;
 }
 
 .row {
@@ -47,6 +50,23 @@ input{
   width: 80%;
   margin-bottom: 20px;
 }
+
+.row1{
+  display: flex;
+}
+
+.espace{
+  flex: 1;
+  border: 1px solid #3e3d3d;
+  background-color: rgba(62, 61, 61, 0.27);
+}
+
+.column{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
 .window {
   width: 100%;
   height: 80px;
@@ -54,4 +74,22 @@ input{
   position: absolute;
   top: 0;
   left: 0;
+}
+.aileGauche{
+  position: absolute;
+  width: 100px;
+  height: 300px;
+  background-color: #ccc;
+  transform: rotate(70deg);
+  top: 60%;
+  left: -150px;
+}
+.aileDroite{
+  position: absolute;
+  width: 100px;
+  height: 300px;
+  background-color: #ccc;
+  transform: rotate(-70deg);
+  top: 60%;
+  right: -150px;
 }

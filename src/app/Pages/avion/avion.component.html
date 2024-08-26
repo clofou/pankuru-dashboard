@@ -6,7 +6,7 @@
     <table>
       <thead>
         <tr>
-          <th>Nom</th><th>Matricule</th><th>Capacite</th><th>Statut</th><th>Action</th>
+          <th>Nom</th><th>Matricule</th><th>Statut</th><th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -14,7 +14,6 @@
           <tr>
             <td (click)="goToSiegePage(item)">{{ item.nom }}</td>
             <td (click)="goToSiegePage(item)">{{ item.matricule }}</td>
-            <td (click)="goToSiegePage(item)">{{ item.capaciteTotale }}</td>
             <td (click)="goToSiegePage(item)">{{ item.statut }}</td>
             <td class="action">
               <div class="button1" (click)="isDeleteButtonClicked(item)"><i class="fa-solid fa-trash"></i></div>

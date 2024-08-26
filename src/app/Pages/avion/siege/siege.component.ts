@@ -7,6 +7,7 @@ import {FormsModule} from "@angular/forms";
 import {SiegeCardComponent} from "./siege-card/siege-card.component";
 import {Siege} from "../../../models/Siege/Siege";
 import {ToastrService} from "ngx-toastr";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-siege',
@@ -14,6 +15,7 @@ import {ToastrService} from "ngx-toastr";
   imports: [
     FormsModule,
     SiegeCardComponent,
+    NgClass,
   ],
   templateUrl: './siege.component.html',
   styleUrl: './siege.component.css'
@@ -26,11 +28,12 @@ export class SiegeComponent implements OnInit{
   };
   errorMessage!: string;
   numeroPlace = 1;
+  aLaligne: boolean = false;
   tarifAffaire!: number;
   avion!: Avion;
   tarifEconomique!: number;
   siegeList: Siege[] = [];
-  siegeFormater: any = [];
+  siegeFormater: Siege[][];
   idAvion!: number;
   nlCorps: number; nlTete: number; nlQueue: number;
   c1: number;c2: number; c3: number;
@@ -38,10 +41,14 @@ export class SiegeComponent implements OnInit{
   q1: number; q2: number; q3: number;
   showDestructionPopup: boolean = false;
   nbrOfSiege1 = 0;
+  variable: number = -1;
+  variable1: string = "";
+
 
   constructor(private crudService: GlobalCrudService, private route: ActivatedRoute, private toastr: ToastrService) {
 
     this.errorMessage = "";
+    this.siegeFormater = [[]];
     [this.nlCorps, this.nlTete, this.nlQueue, this.c1, this.c2, this.c3, this.t1, this.t2, this.t3, this.q1, this.q2, this.q3] = [0,0,0,0,0,0,0,0,0,0,0,0];
     this.info = {
       "tete": {
@@ -77,7 +84,6 @@ export class SiegeComponent implements OnInit{
         this.siegeList = data.filter((value: { avion: { id: number; }; }) => {
           return value.avion.id === this.idAvion;
         });
-        console.log(this.siegeList);
         if (this.siegeList.length != 0){
           this.siegeFormater = this.trierParNumero(this.siegeList);
         }
@@ -99,47 +105,27 @@ export class SiegeComponent implements OnInit{
       return chiffreA - chiffreB;
     });
 
-    let siegeDoublementTrier: Siege[][][] = [
-      [[], [], []],
-      [[], [], []],
-      [[], [], []]
-    ];
+    let siegeTT: Siege[][] = [[]]
+    let lettreEnCours = "";
+    let a = 0;
+    let ok = false;
 
-    for(let siege of siegeTrier) {
-      console.log(siege.numero[0]);
+    for(let i=0; i< siegeTrier.length-1; i++) {
 
-      switch (siege.numero[0]) {
-        case 'A':
-          siegeDoublementTrier[0][0].push(siege);
-          break;
-        case 'B':
-          siegeDoublementTrier[0][1].push(siege);
-          break;
-        case 'C':
-          siegeDoublementTrier[0][2].push(siege);
-          break;
-        case 'D':
-          siegeDoublementTrier[1][0].push(siege);
-          break;
-        case 'E':
-          siegeDoublementTrier[1][1].push(siege);
-          break;
-        case 'F':
-          siegeDoublementTrier[1][2].push(siege);
-          break;
-        case 'G':
-          siegeDoublementTrier[2][0].push(siege);
-          break;
-        case 'H':
-          siegeDoublementTrier[2][1].push(siege);
-          break;
-        case 'I':
-          siegeDoublementTrier[2][2].push(siege);
-          break;
+      if(ok){
+        a++;
+        siegeTT.push([]);
+        ok = false;
       }
+
+      lettreEnCours = siegeTrier[i].numero[0];
+      if((lettreEnCours=='C' || lettreEnCours=='F' || lettreEnCours=='I') && (siegeTrier[i+1].numero[0]== "A" || siegeTrier[i+1].numero[0]== "D" || siegeTrier[i+1].numero[0]== "G")){
+        ok = true;
+      }
+      siegeTT[a].push(siegeTrier[i]);
     }
 
-    return siegeDoublementTrier;
+    return siegeTT;
   }
 
 
@@ -235,8 +221,6 @@ export class SiegeComponent implements OnInit{
             this.info.corps.nbreDeLigne*(this.info.corps.placeParColonne[0]+this.info.corps.placeParColonne[1]+this.info.corps.placeParColonne[2])+
             this.info.queue.nbreDeLigne*(this.info.queue.placeParColonne[0]+this.info.queue.placeParColonne[1]+this.info.queue.placeParColonne[2]);
 
-          console.log(total);
-          console.log(this.nbrOfSiege1);
           if (this.nbrOfSiege1 === total){
             this.recupererListeDesSieges();
             this.toastr.success("Toutes les Sieges ont etes GENEREES");
@@ -249,7 +233,6 @@ export class SiegeComponent implements OnInit{
 
   detruireSiege() {
     let nbrOfSiege = 0;
-    console.log(this.siegeList.length);
     for(let siege of this.siegeList){
       this.crudService.delete("siege", siege.id!).subscribe({
         next: () => {},
@@ -259,7 +242,6 @@ export class SiegeComponent implements OnInit{
         },
         complete: () => {
           nbrOfSiege++;
-          console.log(nbrOfSiege);
           if (nbrOfSiege === this.siegeList.length){
             this.recupererListeDesSieges();
             this.closePopup();
@@ -273,5 +255,29 @@ export class SiegeComponent implements OnInit{
 
   closePopup() {
     this.showDestructionPopup = !this.showDestructionPopup;
+  }
+
+  verifierSisuite(siege: Siege): boolean {
+    let alaLigne = false;
+    if(this.variable+1 != Number(siege.numero.slice(1))){
+      alaLigne = true;
+    }
+    this.variable = Number(siege.numero.slice(1));
+
+
+    return alaLigne;
+  }
+
+  doEspace(siege: Siege) {
+    let does = false;
+    if (this.variable1 != ""){
+      if(this.variable1 != siege.numero[0]){
+        does = !(this.variable1 == 'C' || this.variable1 == 'F' || this.variable1 == 'I');
+      }
+    }
+
+    this.variable1 = siege.numero[0];
+    return does;
+
   }
 }

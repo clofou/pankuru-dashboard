@@ -21,7 +21,6 @@ export class SiegeCardComponent {
   showAddModal: boolean = false;
 
   constructor(private crudService: GlobalCrudService, private toastr: ToastrService) {
-    console.log(this.siege)
   }
 
   showSiegeInfo() {

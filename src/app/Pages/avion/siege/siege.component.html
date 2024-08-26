@@ -5,6 +5,7 @@
     } @else {
       <button (click)="closePopup()">Reconstruire</button>
     }
+    <div>Capacite Totale : {{this.siegeList.length}}</div>
   </div>
   <div class="content">
     <!-- si les sieges ont etes deja generer-->
@@ -39,27 +40,36 @@
       </form>
     } @else {
       <div class="airplane">
+        <div class="aileGauche"></div>
+        <div class="aileDroite"></div>
         <div class="window"></div>
-        <!-- Rangée 1
-        @for (siege of siegeList.tete[0]; track siege.id){
-          <div class="row">
+        <div class="column">
+        @for (siegeLigne of siegeFormater; track siegeLigne.keys()){
+          <div class="row1">
+          @for (siege of siegeLigne; track siege.id){
+            @if (doEspace(siege)){
+              <div class="espace"></div>
+            }
             <app-siege-card [siege]="siege"></app-siege-card>
-            <app-siege-card [siege]="siege"></app-siege-card>
-            <app-siege-card [siege]="siege"></app-siege-card>
+          }
           </div>
-          Rangée 2
-          <div class="row">
-            <app-siege-card [siege]="siege"></app-siege-card>
-            <app-siege-card [siege]="siege"></app-siege-card>
-            <app-siege-card [siege]="siege"></app-siege-card>
-          </div>
-          Rangée 3
-          <div class="row">
-            <app-siege-card [siege]="siege"></app-siege-card>
-            <app-siege-card [siege]="siege"></app-siege-card>
-            <app-siege-card [siege]="siege"></app-siege-card>
-          </div>
-        }-->
+        }
+        </div>
+          <!--<div class="column">
+          @if ((siege.numero[0] === 'A' || siege.numero[0] === 'D' || siege.numero[0] === 'G') && verifierSisuite(siege)){
+
+
+
+          }
+            <div class="row1">
+          @if (doEspace(siege)){
+            <span class="espace"></span>
+          }
+          <app-siege-card [siege]="siege"></app-siege-card>
+            </div>
+
+          </div>-->
+
       </div>
     }
 

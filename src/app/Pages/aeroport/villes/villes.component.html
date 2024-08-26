@@ -5,7 +5,7 @@
   </div>
   <div>
     @for (ville of villeList; track ville.id){
-      <app-ville-card [ville]="ville"></app-ville-card>
+      <app-ville-card [ville]="ville" (isVilleDeleteListener)="supprimerVille($event)" (isVilleEditListener)="modifierVille($event)"></app-ville-card>
     }
 
     @if (showEditModal) {
