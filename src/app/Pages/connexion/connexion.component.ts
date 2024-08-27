@@ -49,8 +49,15 @@ export class ConnexionComponent {
         this.username = '';
         this.password = '';
       },
-      error: () => {
-        this.toastr.error("Nom d'utilisateur ou mot de passe incorrect");
+      error: (err: Error) => {
+        if(err.message == "Error Code: 404\n" +
+          "Message: Http failure response for http://localhost:8080/personne/signin: 404 OK"){
+          this.toastr.error("Nom d'utilisateur ou mot de passe incorrect");
+        } else {
+          this.toastr.error(err.message);
+        }
+
+        console.log(err.message);
         this.username = '';
         this.password = '';
 

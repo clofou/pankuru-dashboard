@@ -45,7 +45,6 @@ export class VillesComponent implements OnInit{
   }
 
   getListVilles(){
-    console.log("HIIII");
     this.crudService.get("ville").subscribe({
       next: (data) => {
         console.log(data);
@@ -61,7 +60,7 @@ export class VillesComponent implements OnInit{
 
   ajouterVille() {
     if (this.villeToAdd.nom.trim() == ""){
-      this.toastr.error("Erreur lors de l'ajout de la ville");
+      this.toastr.error("Champ Vide detecte");
       return;
     }else{
       console.log(this.villeToAdd);
@@ -103,6 +102,10 @@ export class VillesComponent implements OnInit{
     )
   }
   modifierVille(selectedVille: Ville) {
+    if (this.selectedVille.nom.trim() == ""){
+      this.toastr.error("Champ Vide detecte");
+      return;
+    }else{
     this.crudService.update("ville", selectedVille.id!, selectedVille).subscribe(
       {
         next: () => {
@@ -115,6 +118,7 @@ export class VillesComponent implements OnInit{
         }
       }
     )
+    }
   }
 
   protected isAddButttonClicked() {

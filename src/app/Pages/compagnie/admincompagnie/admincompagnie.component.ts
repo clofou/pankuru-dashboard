@@ -64,7 +64,11 @@ export class AdminCompagnieComponent implements OnInit{
     this.selectedAdminCompagnie.password = "********";
   }
 
-  modifierAdminCompagnie(selectedAdminCompagnie: AdminCompagnie) {
+  modifierAdminCompagnie(selectedAdminCompagnie: AdminCompagnie){
+    if(this.admincompagnieToAdd.nom.trim() == "" || this.admincompagnieToAdd.email == "" || this.admincompagnieToAdd.password== ""){
+      this.toastr.error("Champ Vide Detecte");
+      return;
+    } else {
     let compagnie: Compagnie = new Compagnie();
     compagnie.id = this.idCompagnie;
     this.selectedAdminCompagnie.compagnie = compagnie;
@@ -81,6 +85,7 @@ export class AdminCompagnieComponent implements OnInit{
         this.toastr.error(errorMessage);
       }
     })
+    }
   }
 
   isDeleteButtonClicked(selectedAdminCompagnie: AdminCompagnie) {
@@ -107,7 +112,7 @@ export class AdminCompagnieComponent implements OnInit{
   ajouterAdminCompagnie() {
 
     if(this.admincompagnieToAdd.nom.trim() == "" || this.admincompagnieToAdd.email == "" || this.admincompagnieToAdd.password== ""){
-      this.toastr.error("Erreur lors de l'ajout de l'admincompagnie");
+      this.toastr.error("Champ Vide Detecte");
       return;
     } else {
       let compagnie: Compagnie = new Compagnie();

@@ -29,6 +29,11 @@ export class AuthService {
         map(user => {
           if (user && user.jwtToken && UtilFunction.isBrowser()) {
             if(user.roles[0] != "ROLE_USER"){
+              if(user.roles[0] == "ROLE_ADMINCOMPAGNIE"){
+                if(user.username.compagnie.locked){
+                  throw new Error("COMPAGNIE BLOQUE");
+                }
+              }
               localStorage.setItem('currentUser', JSON.stringify(user));
             }else{
               throw new Error("USER NOT AUTHORIZE");

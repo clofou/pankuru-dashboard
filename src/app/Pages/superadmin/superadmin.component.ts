@@ -52,6 +52,7 @@ export class SuperAdminComponent implements OnInit{
   isEditButtonClicked(selectedSuperAdmin: SuperAdmin) {
     this.showEditModal = !this.showEditModal;
     this.selectedSuperAdmin = selectedSuperAdmin;
+    this.selectedSuperAdmin.password = "*****";
   }
 
   modifierSuperAdmin(selectedSuperAdmin: SuperAdmin) {

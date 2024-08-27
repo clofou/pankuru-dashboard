@@ -139,10 +139,10 @@ export class VolComponent implements OnInit{
     this.volToAdd.avionDepart = this.avionList.filter((value) => {return value.id === Number(this.volToAdd.avionDepart)})[0];
 
     console.log(this.volToAdd.aeroportList);
-    if (this.volToAdd.numeroDeVol =='' || this.volToAdd.avionDepart == null || this.volToAdd.aeroportDepart == null || this.volToAdd.tarifEconomiqueDeBase == 0){
+    if (this.volToAdd.numeroDeVol.trim() =='' || this.volToAdd.avionDepart == null || this.volToAdd.aeroportDepart == null || this.volToAdd.tarifEconomiqueDeBase == 0){
+      this.toastr.error("Erreur lors de l'ajout de l'vol");
       return;
     }
-    /*
 
     this.crudService.post("vol", this.volToAdd).subscribe({
       next: (data) => {
@@ -157,7 +157,7 @@ export class VolComponent implements OnInit{
         console.log(err);
         this.toastr.error("Erreur lors de l'ajout de l'vol")
       }
-    })*/
+    })
   }
 
   ajouterEscale() {

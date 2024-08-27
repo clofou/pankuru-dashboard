@@ -51,8 +51,8 @@ export class PaysComponent implements OnInit {
 
 
   ajouterPays() {
-    if(this.paysToAdd.nom.trim() == ""){
-      this.toastr.error("Erreur lors de l'ajout du pays");
+    if(this.paysSelected.nom.trim() == ""){
+      this.toastr.error("Champ Vide detecte");
       return;
     }else{
       this.crudService.post("pays", this.paysToAdd).subscribe(
@@ -73,6 +73,10 @@ export class PaysComponent implements OnInit {
 
   }
   modifierPays(selectedPays: Pays) {
+    if(this.paysToAdd.nom.trim() == ""){
+      this.toastr.error("Champ Vide detecte");
+      return;
+    }else{
     this.crudService.update("pays", selectedPays.id!, selectedPays).subscribe(
       {
         next: () => {
@@ -83,7 +87,7 @@ export class PaysComponent implements OnInit {
           console.log(err);
         }
       }
-    )
+    )}
   }
   supprimerPays(selectedPays: Pays) {
     this.crudService.delete("pays", selectedPays.id!).subscribe(

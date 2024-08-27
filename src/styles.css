@@ -133,9 +133,31 @@ button:hover{
   }
 
 }
-
-.form_content {
-
+.form_content{
+  input{
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    line-height: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    border-radius: 6px;
+    -webkit-appearance: none;
+    color: #99A3BA;
+    border: 1px solid var(--blue-pers);
+    background: #fff;
+    transition: border .3s ease;
+    &::placeholder {
+      color: #CBD1DC;
+    }
+    &:focus {
+      outline: none;
+      border-color: var(--blue-pers);
+    }
+  }
+}
+.form_content1{
   input {
     width: 250px;
     height: 25px;
@@ -150,6 +172,9 @@ button:hover{
     outline: none;
     cursor: pointer;
   }
+}
+
+.form_content1, .form_content {
 
   button {
     background-color: var(--white);

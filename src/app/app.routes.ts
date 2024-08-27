@@ -10,7 +10,6 @@ export const routes: Routes = [
         children:[
             { path: "", redirectTo: "/pankuru/acceuil", pathMatch: "full"},
             { path: "acceuil", title: "acceuil", component: Components.AccueilComponent, canActivate: [AuthGuardService] },
-            { path: "admin", title: "admin", component: Components.AdminComponent, canActivate: [AuthGuardService] },
             { path: "superadmin", title: "superadmin", component: Components.SuperAdminComponent, canActivate: [AuthGuardService] },
             { path: "compagnie", title: "compagnie", component: Components.CompagnieComponent, canActivate: [AuthGuardService] },
             { path: "faq", title: "faq", component: Components.FaqComponent, canActivate: [AuthGuardService] },

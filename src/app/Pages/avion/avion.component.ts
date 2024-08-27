@@ -60,6 +60,10 @@ export class AvionComponent implements OnInit{
   }
 
   modifierAvion(selectedAvion: Avion) {
+    if(this.avionToAdd.nom.trim() == ""){
+      this.toastr.error("Champ Vide detecte")
+      return;
+    }else{
     this.crudService.update("avion", this.selectedAvion.id!, selectedAvion).subscribe({
       next: (data) => {
         console.log(data);
@@ -73,6 +77,7 @@ export class AvionComponent implements OnInit{
         this.toastr.error(errorMessage);
       }
     })
+    }
   }
 
   isDeleteButtonClicked(selectedAvion: Avion) {
@@ -98,7 +103,7 @@ export class AvionComponent implements OnInit{
 
   ajouterAvion() {
     if(this.avionToAdd.nom.trim() == ""){
-      this.toastr.error("Erreur lors de l'ajout de l'avion")
+      this.toastr.error("Champ Vide detecte")
       return;
     }else{
       this.crudService.post("avion", this.avionToAdd).subscribe({
